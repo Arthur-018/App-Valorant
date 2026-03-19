@@ -20,9 +20,15 @@ export default function HomeScreen() {
           resizeMode="contain"
         />
 
-        <Link href={{pathname: '/home'}}>
-          Iniciar
-        </Link>
+      <Button
+       title="Fazer Login"
+       onPress={() => router.push("/login")}
+      />
+     <Button
+       title="Criar Conta"
+       onPress={() => router.push("/register")}
+      />
+
       </View>
 
       <View style={styles.footer}>
@@ -59,6 +65,11 @@ const styles = StyleSheet.create({
     height: 180,
     marginBottom: -20
   },
+  link: {
+    color: '#FFF',
+    fontFamily: 'neue-bold',
+    fontSize: 16,
+    },
 
   footer: {
     width: '80%',
@@ -69,7 +80,7 @@ const styles = StyleSheet.create({
   footerText: {
     textAlign: 'center',
     color: '#FFF',
-    fontSize: 12.5,
-    fontFamily: 'Neue'
+    fontSize: 14,
+    fontFamily: 'neue-bold',
   }
 });
