@@ -1,5 +1,5 @@
 import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { Button } from "../components/Button";
 
 export default function HomeScreen() {
@@ -20,10 +20,9 @@ export default function HomeScreen() {
           resizeMode="contain"
         />
 
-        <Button
-          title="Iniciar"
-          onPress={() => router.replace("/home")}
-        />
+        <Link href={{pathname: '/home'}}>
+          Iniciar
+        </Link>
       </View>
 
       <View style={styles.footer}>
