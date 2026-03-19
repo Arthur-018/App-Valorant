@@ -1,6 +1,6 @@
 import { Text, View } from "react-native"
 
-export const Home = () => {
+export default function Home () {
     return (
         <View>
             <Text>
