@@ -26,7 +26,7 @@ export default function HomeScreen() {
       />
      <Button
        title="Criar Conta"
-       onPress={() => router.push("/register")}
+       onPress={() => router.push("/cadastro")}
       />
 
       </View>
