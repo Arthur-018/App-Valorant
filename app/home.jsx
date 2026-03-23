@@ -1,80 +1,67 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator,  FlatList, StyleSheet, View } from "react-native";
-import ValorantCard from "../components/ValorantCard";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { router } from "expo-router";
+import { ValorantCard } from "../components/ValorantCard";
+import { MenuCard } from "../components/MenuCard";
 
+export default function HomeScreen() {
+  const [agent, setAgent] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    async function buscarAgent() {
+      try {
+        const response = await fetch("https://valorant-api.com/v1/agents");
+        const json = await response.json();
 
-export default function Home() {
-    const [dados, setDados] = useState([]);
-    const [loading, setLoading] = useState(true);
+        const primeiroValido = json.data.find(
+          (item) => item.isPlayableCharacter && item.displayIcon
+        );
 
-    async function buscarDados() {
-        try{
-      const response = await fetch("https://valorant-api.com/v1/agents");
-      const json = await response.json();
-       
-      setDados(json.data);
-     } catch (error){
-        console.log("Erro ao buscar API:", error);
-     } finally {
+        setAgent(primeiroValido);
+      } catch (error) {
+        console.log("Erro ao buscar agent:", error);
+      } finally {
         setLoading(false);
-     }
+      }
     }
 
-    useEffect(() => {
-        buscarDados();
-    }, []);
+    buscarAgent();
+  }, []);
 
-    if (loading) {
-        return (
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#FFF"/>
-            </View>
-        )
-    }
-
+  if (loading) {
     return (
-        <View style={styles.container}>
-            <FlatList 
-            data={dados}
-            keyExtractor={(item) => item.uuid}
-            numColumns={2}
-            contentContainerStyle={styles.listContent}
-            columnWrapperStyle={styles.row}
-             renderItem={({ item }) => (
-                <ValorantCard
-                tittle={item.displayName}
-                image={item.displayIcon}
-                subtitle={item.role?.displayName}
-             onPress={() =>
-              router.push({
-                pathname: "/detalhe",
-                params: { id: item.uuid },
-          })
-            }
-          />
-        )}
-      />
-    </View>
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#fff" />
+      </View>
     );
+  }
+
+  if (!agent) {
+    return <View style={styles.container} />;
+  }
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <MenuCard
+          title="Agentes"
+          onPress={() => router.push("/agents")}
+        />
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#791212',
-    },
-    loadingContainer: {
-        flex: 1,
-        backgroundColor: '#791212',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    listContent: {
-        padding: 16,
-    },
-    row: {
-        justifyContent: 'space-between',
-        marginBottom: 16,
-    }
-})
+  container: {
+    flex: 1,
+    backgroundColor: "#791212",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
+  },
+  content : {
+
+  }
+});
