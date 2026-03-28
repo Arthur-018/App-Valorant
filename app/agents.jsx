@@ -1,18 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
+  ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
 import { router } from "expo-router";
 import { ValorantCard } from "../components/ValorantCard";
+import { RoleCard } from "../components/RoleCard";
+
+const roles = ["Todos", "Duelist", "Controller", "Sentinel", "Initiator"];
 
 export default function AgentsScreen() {
   const [agents, setAgents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState("");
+  const [selectedRole, setSelectedRole] = useState("Todos");
 
   useEffect(() => {
     async function buscarAgents() {
@@ -42,6 +47,14 @@ export default function AgentsScreen() {
     buscarAgents();
   }, []);
 
+  const filteredAgents = useMemo(() => {
+    if (selectedRole === "Todos") return agents;
+
+    return agents.filter(
+      (item) => item.role?.displayName === selectedRole
+    );
+  }, [agents, selectedRole]);
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -60,8 +73,25 @@ export default function AgentsScreen() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Agentes</Text>
+
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.rolesContainer}
+      >
+        {roles.map((role) => (
+          <RoleCard
+            key={role}
+            title={role}
+            active={selectedRole === role}
+            onPress={() => setSelectedRole(role)}
+          />
+        ))}
+      </ScrollView>
+
       <FlatList
-        data={agents}
+        data={filteredAgents}
         keyExtractor={(item) => item.uuid}
         numColumns={2}
         contentContainerStyle={styles.listContent}
@@ -91,6 +121,11 @@ export default function AgentsScreen() {
             />
           );
         }}
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>
+            Nenhum agente encontrado para essa função.
+          </Text>
+        }
       />
     </View>
   );
@@ -100,6 +135,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#791212",
+    paddingTop: 16,
+  },
+  title: {
+    color: "#fff",
+    fontSize: 24,
+    fontWeight: "700",
+    paddingHorizontal: 16,
+    marginBottom: 12,
+  },
+  rolesContainer: {
+    paddingHorizontal: 16,
+    gap: 10,
+    paddingBottom: 10,
   },
   loadingContainer: {
     flex: 1,
@@ -115,9 +163,16 @@ const styles = StyleSheet.create({
   },
   listContent: {
     padding: 16,
+    paddingTop: 8,
   },
   row: {
     justifyContent: "space-between",
     marginBottom: 16,
+  },
+  emptyText: {
+    color: "#fff",
+    textAlign: "center",
+    marginTop: 40,
+    fontSize: 15,
   },
 });
