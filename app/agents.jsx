@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
-  ScrollView,
+  Pressable,
   StyleSheet,
   Text,
   View,
@@ -11,13 +11,38 @@ import { router } from "expo-router";
 import { ValorantCard } from "../components/ValorantCard";
 import { RoleCard } from "../components/RoleCard";
 
-const roles = ["Todos", "Duelist", "Controller", "Sentinel", "Initiator"];
+const roles = [
+  {
+    label: "Duelista",
+    value: "Duelist",
+    image:
+      "https://media.valorant-api.com/gamemodes/96bd3920-4f36-d026-2b28-c683eb0bcac5/displayicon.png",
+  },
+  {
+    label: "Controlador",
+    value: "Controller",
+    image:
+      "https://media.valorant-api.com/gamemodes/96bd3920-4f36-d026-2b28-c683eb0bcac5/displayicon.png",
+  },
+  {
+    label: "Sentinela",
+    value: "Sentinel",
+    image:
+      "https://media.valorant-api.com/gamemodes/96bd3920-4f36-d026-2b28-c683eb0bcac5/displayicon.png",
+  },
+  {
+    label: "Iniciador",
+    value: "Initiator",
+    image:
+      "https://media.valorant-api.com/gamemodes/96bd3920-4f36-d026-2b28-c683eb0bcac5/displayicon.png",
+  },
+];
 
 export default function AgentsScreen() {
   const [agents, setAgents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState("");
-  const [selectedRole, setSelectedRole] = useState("Todos");
+  const [selectedRole, setSelectedRole] = useState(null);
 
   useEffect(() => {
     async function buscarAgents() {
@@ -48,7 +73,7 @@ export default function AgentsScreen() {
   }, []);
 
   const filteredAgents = useMemo(() => {
-    if (selectedRole === "Todos") return agents;
+    if (!selectedRole) return [];
 
     return agents.filter(
       (item) => item.role?.displayName === selectedRole
@@ -73,60 +98,83 @@ export default function AgentsScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Agentes</Text>
+      {!selectedRole ? (
+        <>
+          <Text style={styles.title}>Funções dos Agentes</Text>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.rolesContainer}
-      >
-        {roles.map((role) => (
-          <RoleCard
-            key={role}
-            title={role}
-            active={selectedRole === role}
-            onPress={() => setSelectedRole(role)}
+          <FlatList
+            data={roles}
+            keyExtractor={(item) => item.value}
+            numColumns={2}
+            contentContainerStyle={styles.listContent}
+            columnWrapperStyle={styles.row}
+            renderItem={({ item }) => (
+              <RoleCard
+                title={item.label}
+                image={item.image}
+                onPress={() => setSelectedRole(item.value)}
+              />
+            )}
           />
-        ))}
-      </ScrollView>
+        </>
+      ) : (
+        <>
+          <View style={styles.header}>
+            <Pressable
+              onPress={() => setSelectedRole(null)}
+              style={({ hovered, pressed }) => [
+                styles.backButton,
+                hovered && styles.backHover,
+                pressed && styles.backPressed,
+              ]}
+            >
+              <Text style={styles.backButtonText}>Voltar</Text>
+            </Pressable>
 
-      <FlatList
-        data={filteredAgents}
-        keyExtractor={(item) => item.uuid}
-        numColumns={2}
-        contentContainerStyle={styles.listContent}
-        columnWrapperStyle={styles.row}
-        renderItem={({ item }) => {
-          const image =
-            item.fullPortrait ||
-            item.fullPortraitV2 ||
-            item.bustPortrait ||
-            item.displayIcon;
+            <Text style={styles.title}>
+              {roles.find((role) => role.value === selectedRole)?.label}
+            </Text>
+          </View>
 
-          return (
-            <ValorantCard
-              title={item.displayName}
-              image={image}
-              subtitle={item.role?.displayName || "Sem função"}
-              onPress={() =>
-                router.push({
-                  pathname: "/detalhe",
-                  params: {
-                    id: item.uuid,
-                    nome: item.displayName,
-                    funcao: item.role?.displayName || "Sem função",
-                  },
-                })
-              }
-            />
-          );
-        }}
-        ListEmptyComponent={
-          <Text style={styles.emptyText}>
-            Nenhum agente encontrado para essa função.
-          </Text>
-        }
-      />
+          <FlatList
+            data={filteredAgents}
+            keyExtractor={(item) => item.uuid}
+            numColumns={2}
+            contentContainerStyle={styles.listContent}
+            columnWrapperStyle={styles.row}
+            renderItem={({ item }) => {
+              const image =
+                item.fullPortrait ||
+                item.fullPortraitV2 ||
+                item.bustPortrait ||
+                item.displayIcon;
+
+              return (
+                <ValorantCard
+                  title={item.displayName}
+                  image={image}
+                  subtitle={item.role?.displayName || "Sem função"}
+                  onPress={() =>
+                    router.push({
+                      pathname: "/detalhe",
+                      params: {
+                        id: item.uuid,
+                        nome: item.displayName,
+                        funcao: item.role?.displayName || "Sem função",
+                      },
+                    })
+                  }
+                />
+              );
+            }}
+            ListEmptyComponent={
+              <Text style={styles.emptyText}>
+                Nenhum agente encontrado para essa função.
+              </Text>
+            }
+          />
+        </>
+      )}
     </View>
   );
 }
@@ -136,18 +184,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#791212",
     paddingTop: 16,
-  },
-  title: {
-    color: "#fff",
-    fontSize: 24,
-    fontWeight: "700",
-    paddingHorizontal: 16,
-    marginBottom: 12,
-  },
-  rolesContainer: {
-    paddingHorizontal: 16,
-    gap: 10,
-    paddingBottom: 10,
   },
   loadingContainer: {
     flex: 1,
@@ -161,9 +197,38 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
   },
+  title: {
+    color: "#fff",
+    fontSize: 24,
+    fontWeight: "700",
+    paddingHorizontal: 16,
+    marginBottom: 12,
+  },
+  header: {
+    paddingHorizontal: 16,
+    marginBottom: 8,
+  },
+  backButton: {
+    alignSelf: "flex-start",
+    backgroundColor: "#1f1f1f",
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 10,
+    marginBottom: 12,
+  },
+  backHover: {
+    opacity: 0.85,
+  },
+  backPressed: {
+    opacity: 0.7,
+  },
+  backButtonText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "600",
+  },
   listContent: {
     padding: 16,
-    paddingTop: 8,
   },
   row: {
     justifyContent: "space-between",
