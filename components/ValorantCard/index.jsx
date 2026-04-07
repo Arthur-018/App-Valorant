@@ -23,9 +23,11 @@ export function ValorantCard({ title, image, subtitle, onPress }) {
           {title}
         </Text>
 
-        <Text style={styles.subtitle} numberOfLines={2}>
-          {subtitle}
-        </Text>
+        {!!subtitle && (
+          <Text style={styles.subtitle} numberOfLines={2}>
+            {subtitle}
+          </Text>
+        )}
       </View>
     </Pressable>
   );
