@@ -1,86 +1,15 @@
-import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
-import { Link, router } from "expo-router";
-import { Button } from "../components/Button";
+import { useEffect } from "react";
+import { ActivityIndicator, View } from "react-native";
+import { router } from "expo-router";
 
-export default function HomeScreen() {
+export default function Index() {
+  useEffect(() => {
+    router.replace("/login");
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require("../assets/images/banner.png")}
-        style={styles.banner}
-        resizeMode="cover"
-      />
-
-      <View style={styles.center}>
-
-
-        <Image
-          style={styles.logo}
-          source={require("../assets/images/logoBloqueio.png")}
-          resizeMode="contain"
-        />
-
-      <Button
-       title="Fazer Login"
-       onPress={() => router.push("/login")}
-      />
-     <Button
-       title="Criar Conta"
-       onPress={() => router.push("/cadastro")}
-      />
-
-      </View>
-
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          Projeto para estudo
-        </Text>
-        <Text style={styles.footerText}>
-          Desenvolvido por Arthur!
-        </Text>
-      </View>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#791212" }}>
+      <ActivityIndicator size="large" color="#fff" />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#791212",
-
-  },
-  banner: {
-    ...StyleSheet.absoluteFillObject,
-    width: "100%",
-    height: "100%",
-  },
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 8,
-  },
-  logo: {
-    width: 260,
-    height: 180,
-    marginBottom: -20
-  },
-  link: {
-    color: '#FFF',
-    fontFamily: 'neue-bold',
-    fontSize: 16,
-    },
-
-  footer: {
-    width: '80%',
-    alignSelf: 'center',
-    alignItems: 'center',
-    paddingBottom: 30,
-  },
-  footerText: {
-    textAlign: 'center',
-    color: '#FFF',
-    fontSize: 14,
-    fontFamily: 'neue-bold',
-  }
-});

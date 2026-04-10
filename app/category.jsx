@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { ValorantCard } from "../components/ValorantCard";
+import { BackButton } from "../components/BackButton";
 import { categories } from "../data/categories";
 import { getCategoryData } from "../services/valorantApi";
 import { getFirstValidImage, getNestedValue } from "../services/helpers";
@@ -37,7 +38,6 @@ export default function CategoryScreen() {
         const filteredData = data.filter((item) => {
           const image = getFirstValidImage(item, category.imageFieldPriority);
           const title = getNestedValue(item, category.titleField);
-
           return !!title || !!image;
         });
 
@@ -56,6 +56,7 @@ export default function CategoryScreen() {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
+        <BackButton />
         <ActivityIndicator size="large" color="#fff" />
       </View>
     );
@@ -64,6 +65,7 @@ export default function CategoryScreen() {
   if (erro) {
     return (
       <View style={styles.loadingContainer}>
+        <BackButton />
         <Text style={styles.feedbackText}>{erro}</Text>
       </View>
     );
@@ -71,6 +73,7 @@ export default function CategoryScreen() {
 
   return (
     <View style={styles.container}>
+      <BackButton />
       <Text style={styles.title}>{category?.title}</Text>
 
       <FlatList
@@ -93,7 +96,32 @@ export default function CategoryScreen() {
               title={title}
               image={image}
               subtitle={subtitle}
-              onPress={() =>
+              onPress={() => {
+                if (category.key === "weapons") {
+                  router.push({
+                    pathname: "/weapon-detail",
+                    params: {
+                      uuid: item.uuid,
+                      title,
+                      image: image || "",
+                    },
+                  });
+                  return;
+                }
+
+                if (category.key === "agents") {
+                  router.push({
+                    pathname: "/agent-detail",
+                    params: {
+                      title,
+                      image: image || "",
+                      role: item.role?.displayName || "",
+                      description: item.description || "",
+                    },
+                  });
+                  return;
+                }
+
                 router.push({
                   pathname: "/detalhe",
                   params: {
@@ -101,8 +129,8 @@ export default function CategoryScreen() {
                     subtitle: subtitle || "",
                     image: image || "",
                   },
-                })
-              }
+                });
+              }}
             />
           );
         }}
@@ -121,12 +149,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#791212",
     paddingTop: 16,
+    paddingHorizontal: 16,
   },
   loadingContainer: {
     flex: 1,
     backgroundColor: "#791212",
     justifyContent: "center",
-    alignItems: "center",
     padding: 20,
   },
   feedbackText: {
@@ -138,11 +166,10 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 24,
     fontWeight: "700",
-    paddingHorizontal: 16,
     marginBottom: 12,
   },
   listContent: {
-    padding: 16,
+    paddingBottom: 16,
   },
   row: {
     justifyContent: "space-between",

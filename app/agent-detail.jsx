@@ -2,8 +2,8 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { BackButton } from "../components/BackButton";
 
-export default function DetalheScreen() {
-  const { title, subtitle, image } = useLocalSearchParams();
+export default function AgentDetailScreen() {
+  const { title, image, description, role } = useLocalSearchParams();
 
   return (
     <View style={styles.container}>
@@ -19,7 +19,11 @@ export default function DetalheScreen() {
 
       <Text style={styles.title}>{title}</Text>
 
-      {!!subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+      {!!role && <Text style={styles.role}>{role}</Text>}
+
+      {!!description && (
+        <Text style={styles.description}>{description}</Text>
+      )}
     </View>
   );
 }
@@ -32,19 +36,27 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 250,
+    height: 280,
     marginBottom: 20,
   },
   title: {
     color: "#fff",
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "700",
-    marginBottom: 12,
     textAlign: "center",
+    marginBottom: 8,
   },
-  subtitle: {
+  role: {
+    color: "#ffd6d6",
+    fontSize: 16,
+    textAlign: "center",
+    marginBottom: 20,
+    fontWeight: "600",
+  },
+  description: {
     color: "#fff",
     fontSize: 16,
+    lineHeight: 24,
     textAlign: "center",
   },
 });

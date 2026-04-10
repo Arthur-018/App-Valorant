@@ -1,75 +1,53 @@
-import { useState } from "react";
-import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { router } from "expo-router";
-import { Button } from "../components/Button";
 
-export default function Login() {
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
-    
-    function handleLogin() {
-        if (!email || !senha) {
-            Alert.alert("Erro", "Preencha email e senha.");
-            return;
-        }
-        Alert.alert("Sucesso", "Login realizado com sucesso!");
-        router.replace("/home");
-    }
+export default function LoginScreen() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Login</Text>
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Entrar</Text>
-            <TextInput 
-            style={styles.input}
-            placeholder="Digite seu email"
-            placeholderTextColor="#999"
-            value={email}
-            onChangeText={setEmail}
-            />
-            <TextInput 
-            style={styles.input}
-            placeholder="Digite sua senha"
-            placeholderTextColor="#999"
-            secureTextEntry
-            value={senha}
-            onChangeText={setSenha} />
+      <Pressable style={styles.button} onPress={() => router.replace("/home")}>
+        <Text style={styles.buttonText}>Entrar</Text>
+      </Pressable>
 
-            <Button
-                title="Entrar"
-                onPress={handleLogin}
-            />
-            <Text style={styles.link} onPress={() => router.push("/cadastro")}>
-                Nâo tem conta? Criar conta
-            </Text>
-        </View>
-    )
+      <Pressable style={[styles.button, styles.secondary]} onPress={() => router.push("/cadastro")}>
+        <Text style={styles.buttonText}>Criar conta</Text>
+      </Pressable>
+    </View>
+  );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#721313",
+    backgroundColor: "#791212",
     justifyContent: "center",
-    paddingHorizontal: 24,
+    alignItems: "center",
+    padding: 20,
   },
   title: {
-    fontSize: 32,
-    color: "#FFF",
-    textAlign: "center",
-    marginBottom: 30,
-    fontWeight: "bold",
+    color: "#fff",
+    fontSize: 30,
+    fontWeight: "700",
+    marginBottom: 24,
   },
-  input: {
-    width: "100%",
-    backgroundColor: "#FFF",
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    marginBottom: 14,
+  button: {
+    backgroundColor: "#1f1f1f",
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 12,
+    marginBottom: 12,
+    minWidth: 180,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
   },
-  link: {
-    marginTop: 20,
-    color: "#FFF",
-    textAlign: "center",
-    textDecorationLine: "underline",
+  secondary: {
+    opacity: 0.95,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "700",
   },
 });

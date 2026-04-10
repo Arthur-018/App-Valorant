@@ -1,89 +1,53 @@
-import { useState } from "react";
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
-import { Button } from "../components/Button/index";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { router } from "expo-router";
 
+export default function CadastroScreen() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Cadastro</Text>
 
-export default function Cadastro() {
-    const [nome, setNome] = useState("");
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
+      <Pressable style={styles.button} onPress={() => router.replace("/home")}>
+        <Text style={styles.buttonText}>Cadastrar e entrar</Text>
+      </Pressable>
 
-    function handleCadastro() {
-        if (!nome || !email || !senha) {
-            Alert.alert("Erro", "Preencha todos os campos.");
-            return;
-        }
-
-        Alert.alert("Sucesso", "Conta criada com sucesso!");
-        router.replace("/login");
-    }
-
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}> Criar Conta </Text>
-
-            <TextInput
-                style={styles.input}
-                placeholder="Digite seu nome"
-                placeholderTextColor="#999"
-                value={nome}
-                onChangeText={setNome}
-            />
-
-            <TextInput
-                style={styles.input}
-                placeholder="Digite seu email"
-                placeholderTextColor="#999"
-                value={email}
-                onChangeText={setEmail}
-            />
-            <TextInput
-            style={styles.input}
-            placeholder="Crie uma senha"
-            placeholderTextColor="#999"
-            secureTextEntry
-            value={senha}
-            onChangeText={setSenha}
-            />
-
-            <Button title="Criar conta" onPress={handleCadastro} />
-
-            <Text style={styles.link} onPress={() => router.push("/login")}>
-                Já tem conta? Entrar
-            </Text>
-
-        </View>
-
-    )
+      <Pressable style={[styles.button, styles.secondary]} onPress={() => router.replace("/login")}>
+        <Text style={styles.buttonText}>Já tenho conta</Text>
+      </Pressable>
+    </View>
+  );
 }
 
-const styles = StyleSheet.create ({ 
-    container: {
-        flex: 1,
-        backgroundColor: "#791212",
-        justifyContent: "center",
-        paddingHorizontal: 24,
-    },
-    title: {
-        fontSize: 32,
-        color: "#FFF",
-        textAlign: "center",
-        marginBottom: 30,
-        fontWeight: "bold",
-    },
-    input: {
-        width: "100%",
-        backgroundColor: "#FFF",
-        borderRadius: 10,
-        paddingHorizontal: 14,
-        paddingVertical: 12,
-        marginBottom: 12,
-    },
-    link: {
-        marginTop: 20,
-        color: "#FFF",
-        textAlign: "center",
-        textDecorationLine: "underline",
-    },
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#791212",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  title: {
+    color: "#fff",
+    fontSize: 30,
+    fontWeight: "700",
+    marginBottom: 24,
+  },
+  button: {
+    backgroundColor: "#1f1f1f",
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 12,
+    marginBottom: 12,
+    minWidth: 200,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+  },
+  secondary: {
+    opacity: 0.95,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "700",
+  },
 });
