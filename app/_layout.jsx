@@ -40,7 +40,10 @@ export default function RootLayout() {
         <Stack.Screen name="login" />
         <Stack.Screen name="home" />
         <Stack.Screen name="agents" />
+        <Stack.Screen name="agent-detail" />
         <Stack.Screen name="weapons" />
+        <Stack.Screen name="weapon-detail" />
+        <Stack.Screen name="weapon-skins" />
         <Stack.Screen name="maps" />
         <Stack.Screen name="profile" />
       </Stack>

@@ -1,39 +1,76 @@
 import { Feather } from "@expo/vector-icons";
-import { useState } from "react";
-import { FlatList, Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { useRouter } from "expo-router";
+import { useEffect, useState } from "react";
+import {
+  FlatList,
+  Image,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ScreenHeader } from "../components/ScreenHeader";
-import { WEAPONS } from "../data/mock/weapons";
+import { ErrorView } from "../components/ErrorView";
+import { LoadingScreen } from "../components/LoadingScreen";
 import { useColors } from "../hooks/useColors";
 
-const CATEGORY_COLORS = {
-  Rifle: "#FF4655",
-  SMG: "#00C4B4",
-  Sniper: "#7B5BD2",
-  Shotgun: "#F5A623",
-  Heavy: "#56B847",
-  Pistol: "#8B9BA8",
-};
+function categoryLabel(cat) {
+  return cat?.replace("EEquippableCategory::", "") ?? cat ?? "";
+}
 
 export default function WeaponsScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const [search, setSearch] = useState("");
+  const [weapons, setWeapons] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  const bottomPad = Platform.OS === "web" ? 34 : insets.bottom;
-  const filtered = WEAPONS.filter((w) =>
-    w.name.toLowerCase().includes(search.toLowerCase())
+  const load = async () => {
+    setLoading(true);
+    setError(false);
+    try {
+      const res = await fetch("https://valorant-api.com/v1/weapons?language=pt-BR");
+      const json = await res.json();
+      setWeapons(json.data);
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  const topPad = Platform.OS === "web" ? Math.max(insets.top, 24) : insets.top;
+
+  if (loading) return <LoadingScreen message="Carregando armas..." />;
+  if (error || !weapons) return <ErrorView message="Não foi possível carregar as armas" onRetry={load} />;
+
+  const filtered = weapons.filter((w) =>
+    w.displayName.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
     <View style={[styles.root, { backgroundColor: colors.background }]}>
-      <ScreenHeader title="Armas" />
+      <View style={[styles.headerBar, { paddingTop: topPad + 8, backgroundColor: colors.background }]}>
+        <Pressable style={[styles.backBtn, { backgroundColor: colors.card }]} onPress={() => router.back()}>
+          <Feather name="arrow-left" size={20} color={colors.foreground} />
+        </Pressable>
+        <Text style={[styles.headerTitle, { color: colors.foreground }]}>Armas</Text>
+        <View style={{ width: 38 }} />
+      </View>
 
       <View style={{ marginHorizontal: 16, marginBottom: 12 }}>
         <View style={[styles.searchBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Feather name="search" size={16} color={colors.textSecondary} />
           <TextInput
-            style={[styles.searchInput, { color: colors.foreground }]}
+            style={[styles.searchInput, { color: colors.foreground, ...(Platform.OS === "web" ? { outlineStyle: "none" } : {}) }]}
             placeholder="Buscar arma..."
             placeholderTextColor={colors.textTertiary}
             value={search}
@@ -49,43 +86,37 @@ export default function WeaponsScreen() {
 
       <FlatList
         data={filtered}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: bottomPad + 20 }}
-        ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+        keyExtractor={(item) => item.uuid}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: (Platform.OS === "web" ? 34 : insets.bottom) + 20 }}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => {
-          const catColor = CATEGORY_COLORS[item.category] ?? colors.primary;
-          return (
-            <View style={[styles.weaponCard, { backgroundColor: colors.card }]}>
-              <View style={[styles.iconBox, { backgroundColor: catColor + "22" }]}>
-                <Feather name="crosshair" size={22} color={catColor} />
-              </View>
-              <View style={styles.weaponLeft}>
-                <Text style={[styles.categoryLabel, { color: catColor }]}>
-                  {item.category}
-                </Text>
-                <Text style={[styles.weaponName, { color: colors.foreground }]}>
-                  {item.name}
-                </Text>
-                <View style={styles.metaRow}>
-                  <Feather name="dollar-sign" size={11} color={colors.gold} />
-                  <Text style={[styles.metaText, { color: colors.gold }]}>{item.cost}</Text>
-                  <Text style={[styles.metaSep, { color: colors.textTertiary }]}>·</Text>
-                  <Text style={[styles.metaText, { color: colors.textSecondary }]}>
-                    {item.damage} dmg
-                  </Text>
+        renderItem={({ item }) => (
+          <Pressable
+            style={[styles.weaponCard, { backgroundColor: colors.card }]}
+            onPress={() => router.push({ pathname: "/weapon-detail", params: { uuid: item.uuid } })}
+          >
+            <View style={styles.weaponLeft}>
+              <Text style={[styles.categoryLabel, { color: colors.primary }]}>
+                {categoryLabel(item.category)}
+              </Text>
+              <Text style={[styles.weaponName, { color: colors.foreground }]}>{item.displayName}</Text>
+              {item.shopData?.cost ? (
+                <View style={styles.costRow}>
+                  <Feather name="dollar-sign" size={12} color={colors.gold} />
+                  <Text style={[styles.costText, { color: colors.gold }]}>{item.shopData.cost}</Text>
                 </View>
-              </View>
-              <Feather name="chevron-right" size={18} color={colors.textSecondary} />
+              ) : null}
             </View>
-          );
-        }}
+            {item.displayIcon ? (
+              <Image source={{ uri: item.displayIcon }} style={styles.weaponImg} resizeMode="contain" />
+            ) : null}
+            <Feather name="chevron-right" size={18} color={colors.textSecondary} />
+          </Pressable>
+        )}
+        ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
         ListEmptyComponent={
           <View style={styles.empty}>
             <Feather name="search" size={32} color={colors.textSecondary} />
-            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-              Nenhuma arma encontrada
-            </Text>
+            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>Nenhuma arma encontrada</Text>
           </View>
         }
       />
@@ -95,26 +126,38 @@ export default function WeaponsScreen() {
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
+  headerBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+  },
+  backBtn: { width: 38, height: 38, borderRadius: 10, alignItems: "center", justifyContent: "center" },
+  headerTitle: { fontSize: 18, fontFamily: "Inter_700Bold" },
   searchBox: {
-    flexDirection: "row", alignItems: "center",
-    borderRadius: 12, borderWidth: 1,
-    paddingHorizontal: 12, height: 44, gap: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 12,
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    height: 44,
+    gap: 8,
   },
-  searchInput: { flex: 1, fontSize: 14, fontFamily: "Inter_400Regular", outlineStyle: "none" },
+  searchInput: { flex: 1, fontSize: 14, fontFamily: "Inter_400Regular" },
   weaponCard: {
-    flexDirection: "row", alignItems: "center",
-    borderRadius: 14, padding: 14, gap: 12,
-  },
-  iconBox: {
-    width: 48, height: 48, borderRadius: 12,
-    alignItems: "center", justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 14,
+    padding: 14,
+    gap: 10,
   },
   weaponLeft: { flex: 1, gap: 2 },
   categoryLabel: { fontSize: 10, fontFamily: "Inter_600SemiBold", letterSpacing: 0.5 },
   weaponName: { fontSize: 16, fontFamily: "Inter_700Bold" },
-  metaRow: { flexDirection: "row", alignItems: "center", gap: 4, marginTop: 2 },
-  metaText: { fontSize: 12, fontFamily: "Inter_500Medium" },
-  metaSep: { fontSize: 12 },
+  costRow: { flexDirection: "row", alignItems: "center", gap: 2, marginTop: 2 },
+  costText: { fontSize: 13, fontFamily: "Inter_500Medium" },
+  weaponImg: { width: 100, height: 60 },
   empty: { alignItems: "center", paddingTop: 60, gap: 12 },
   emptyText: { fontSize: 15, fontFamily: "Inter_400Regular" },
 });
