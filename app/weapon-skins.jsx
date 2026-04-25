@@ -7,6 +7,7 @@ import {
   Modal,
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -26,6 +27,29 @@ function getSkinImage(skin) {
   );
 }
 
+const LEVEL_ITEM_LABELS = {
+  "EEquippableSkinLevelItem::VFX": "Efeitos visuais",
+  "EEquippableSkinLevelItem::Animation": "Animação",
+  "EEquippableSkinLevelItem::Attacker_Defender_Distinction": "Distinção atacante/defensor",
+  "EEquippableSkinLevelItem::Finisher": "Finalização",
+  "EEquippableSkinLevelItem::FishAnimation": "Animação de peixe",
+  "EEquippableSkinLevelItem::FullAnimation": "Animação completa",
+  "EEquippableSkinLevelItem::Heirloom": "Relíquia",
+  "EEquippableSkinLevelItem::HeartbeatAndMapSensor": "Sensor de batimento e mapa",
+  "EEquippableSkinLevelItem::KillBanner": "Banner de eliminação",
+  "EEquippableSkinLevelItem::KillCounter": "Contador de eliminações",
+  "EEquippableSkinLevelItem::KillEffect": "Efeito de eliminação",
+  "EEquippableSkinLevelItem::Sound": "Sons personalizados",
+  "EEquippableSkinLevelItem::Transformation": "Transformação",
+  "EEquippableSkinLevelItem::Voiceover": "Narração",
+  "EEquippableSkinLevelItem::TopFrag": "Top frag",
+};
+
+function levelItemLabel(item) {
+  if (!item) return "Padrão";
+  return LEVEL_ITEM_LABELS[item] || item.replace("EEquippableSkinLevelItem::", "");
+}
+
 export default function WeaponSkinsScreen() {
   const { uuid, name, openSkin } = useLocalSearchParams();
   const colors = useColors();
@@ -37,6 +61,17 @@ export default function WeaponSkinsScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [selectedSkin, setSelectedSkin] = useState(null);
+  const [selectedLevelIdx, setSelectedLevelIdx] = useState(0);
+
+  const openSkinModal = (skin) => {
+    setSelectedSkin(skin);
+    setSelectedLevelIdx(0);
+  };
+
+  const closeSkinModal = () => {
+    setSelectedSkin(null);
+    setSelectedLevelIdx(0);
+  };
 
   const load = async () => {
     if (!uuid) return;
@@ -74,7 +109,10 @@ export default function WeaponSkinsScreen() {
   useEffect(() => {
     if (openSkin && weapon?.skins) {
       const found = weapon.skins.find((s) => s.uuid === openSkin);
-      if (found) setSelectedSkin(found);
+      if (found) {
+        setSelectedSkin(found);
+        setSelectedLevelIdx(0);
+      }
     }
   }, [openSkin, weapon]);
 
@@ -90,7 +128,13 @@ export default function WeaponSkinsScreen() {
 
   const selectedTheme = selectedSkin ? themes[selectedSkin.themeUuid] : null;
   const selectedTier = selectedSkin ? tiers[selectedSkin.contentTierUuid] : null;
-  const selectedImg = selectedSkin ? getSkinImage(selectedSkin) : null;
+  const skinLevels = selectedSkin?.levels ?? [];
+  const hasMultipleLevels = skinLevels.length > 1;
+  const safeLevelIdx = Math.min(selectedLevelIdx, Math.max(skinLevels.length - 1, 0));
+  const currentLevel = skinLevels[safeLevelIdx] || null;
+  const selectedImg = selectedSkin
+    ? currentLevel?.displayIcon || getSkinImage(selectedSkin)
+    : null;
   const tierColor = selectedTier?.highlightColor
     ? `#${selectedTier.highlightColor.slice(0, 6)}`
     : colors.textSecondary;
@@ -120,7 +164,7 @@ export default function WeaponSkinsScreen() {
           return (
             <Pressable
               style={[styles.skinCard, { backgroundColor: colors.card }]}
-              onPress={() => setSelectedSkin(item)}
+              onPress={() => openSkinModal(item)}
             >
               <View style={[styles.skinImgBox, { backgroundColor: colors.surfaceElevated }]}>
                 {img ? (
@@ -153,16 +197,16 @@ export default function WeaponSkinsScreen() {
         visible={!!selectedSkin}
         transparent
         animationType="fade"
-        onRequestClose={() => setSelectedSkin(null)}
+        onRequestClose={closeSkinModal}
       >
-        <Pressable style={styles.backdrop} onPress={() => setSelectedSkin(null)}>
+        <Pressable style={styles.backdrop} onPress={closeSkinModal}>
           <Pressable
             style={[styles.modalCard, { backgroundColor: colors.card, borderColor: colors.border }]}
             onPress={(e) => e.stopPropagation?.()}
           >
             <Pressable
               style={[styles.closeBtn, { backgroundColor: colors.surfaceElevated }]}
-              onPress={() => setSelectedSkin(null)}
+              onPress={closeSkinModal}
               hitSlop={8}
             >
               <Feather name="x" size={18} color={colors.foreground} />
@@ -197,6 +241,51 @@ export default function WeaponSkinsScreen() {
                   </View>
                 ) : null}
 
+                {hasMultipleLevels ? (
+                  <View style={styles.levelsBlock}>
+                    <Text style={[styles.levelsTitle, { color: colors.textSecondary }]}>
+                      Níveis da skin
+                    </Text>
+                    <ScrollView
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      contentContainerStyle={styles.levelsRow}
+                    >
+                      {skinLevels.map((lv, idx) => {
+                        const active = idx === safeLevelIdx;
+                        return (
+                          <Pressable
+                            key={lv.uuid}
+                            onPress={() => setSelectedLevelIdx(idx)}
+                            style={[
+                              styles.levelChip,
+                              {
+                                backgroundColor: active ? tierColor : colors.surfaceElevated,
+                                borderColor: active ? tierColor : colors.border,
+                              },
+                            ]}
+                          >
+                            <Text
+                              style={[
+                                styles.levelChipText,
+                                { color: active ? "#0b0e13" : colors.foreground },
+                              ]}
+                            >
+                              Nível {idx + 1}
+                            </Text>
+                          </Pressable>
+                        );
+                      })}
+                    </ScrollView>
+                    <Text
+                      style={[styles.levelDescription, { color: colors.textSecondary }]}
+                      numberOfLines={2}
+                    >
+                      {levelItemLabel(currentLevel?.levelItem)}
+                    </Text>
+                  </View>
+                ) : null}
+
                 <View style={[styles.infoBox, { backgroundColor: colors.surfaceElevated }]}>
                   <View style={styles.infoRow}>
                     <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Pacote</Text>
@@ -215,7 +304,7 @@ export default function WeaponSkinsScreen() {
                   <View style={styles.infoRow}>
                     <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Níveis</Text>
                     <Text style={[styles.infoValue, { color: colors.foreground }]}>
-                      {selectedSkin.levels?.length || 1}
+                      {skinLevels.length || 1}
                     </Text>
                   </View>
                 </View>
@@ -316,6 +405,34 @@ const styles = StyleSheet.create({
   },
   tierIcon: { width: 18, height: 18 },
   tierText: { fontSize: 13, fontFamily: "Inter_600SemiBold" },
+  levelsBlock: {
+    gap: 8,
+  },
+  levelsTitle: {
+    fontSize: 12,
+    fontFamily: "Inter_500Medium",
+    textTransform: "uppercase",
+    letterSpacing: 0.6,
+  },
+  levelsRow: {
+    gap: 8,
+    paddingVertical: 2,
+  },
+  levelChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 999,
+    borderWidth: 1,
+  },
+  levelChipText: {
+    fontSize: 12,
+    fontFamily: "Inter_600SemiBold",
+  },
+  levelDescription: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    fontStyle: "italic",
+  },
   infoBox: {
     borderRadius: 12,
     padding: 4,
