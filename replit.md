@@ -1,26 +1,40 @@
-# Valorant App Completo Final
+# Valorant Hub
 
-An Expo + Expo Router project displaying Valorant data (agents, weapons, skins, maps, etc.) consumed from the public `valorant-api.com` API.
+App mobile real (Expo + React Native + Expo Router) inspirado no protótipo "Valorant app-post". Mantém o mesmo visual mas com a estrutura simplificada, sem APIs reais da Riot e sem dados de jogador.
 
 ## Stack
-- Expo SDK 51
-- Expo Router 3 (file-based routing in `app/`)
-- React Native 0.74 + React Native Web 0.19 for the web build
+- Expo SDK 51 (Expo Router 3 — file-based routing)
+- React Native 0.74 + React Native Web 0.19 (preview no navegador)
 - React 18.2
+- @expo-google-fonts/inter (fontes Inter 400/500/600/700)
+- @expo/vector-icons (Feather)
+- react-native-safe-area-context
 
-## Project Structure
-- `app/` — Expo Router screens (login, cadastro, home, category, detalhe, agent-detail, weapon-detail, weapon-skins, maps)
-- `components/` — Reusable UI (BackButton, Button, Home, MenuCard, RoleCard, ValorantCard)
-- `services/` — `valorantApi.js` (fetch helpers) and `helpers.js` (object utilities)
-- `data/categories.js` — Static list of categories shown on the home screen
-- `assets/`, `constants/`, `hooks/` — Standard Expo project folders
+## Estrutura de pastas
+- `app/` — telas (Expo Router)
+  - `index.jsx` — redireciona para `/login`
+  - `login.jsx` — login simples (apenas botão "Entrar", sem auth real)
+  - `home.jsx` — grid de categorias (Agentes, Armas, Mapas, Perfil)
+  - `agents.jsx`, `weapons.jsx`, `maps.jsx` — listagens com dados mockados
+  - `profile.jsx` — perfil fictício + aviso sobre RSO
+  - `_layout.jsx` — Stack root, carrega fontes Inter, esconde splash
+- `components/` — `CategoryCard.jsx`, `ScreenHeader.jsx`
+- `data/mock/` — `agents.js`, `weapons.js`, `maps.js`
+- `constants/colors.js`, `hooks/useColors.js` — design tokens (paleta dark estilo Valorant)
 
-## Replit Setup
-- The single `Start application` workflow runs `CI=1 npx expo start --web --port 5000 --host lan`, exposing the web build on port 5000 (the only port supported by the Replit web preview).
-- `CI=1` keeps Metro from prompting interactively for missing TypeScript packages.
-- `app.json` declares `platforms: ["ios", "android", "web"]` and `web.bundler: "metro"` so Expo Router can produce a web bundle.
+## Regras importantes (impostas pelo escopo do projeto)
+- Sem Riot API, sem busca de Riot ID, sem WebView, sem store checker
+- Sem KDA / ACS / win rate / histórico de partidas
+- Login não autentica de verdade — apenas navega
+- Perfil mostra layout + mensagem: "Estatísticas completas estarão disponíveis após integração com Riot Sign On (RSO)."
 
-## Deployment
-- Configured as a static deployment.
-- Build command: `npx expo export --platform web`
-- Publish directory: `dist`
+## Replit setup
+- Workflow `Start application` roda `CI=1 npx expo start --web --port 5000 --host lan`. Porta 5000 é a única suportada pelo preview web.
+- `CI=1` evita prompt interativo para instalar TypeScript.
+- `app.json` declara `platforms: ["ios", "android", "web"]` e `web.bundler: "metro"`.
+- O usuário pode escanear o QR code da barra de URL no Replit para abrir o app no Expo Go (mobile real).
+
+## Deploy
+- Configurado como deploy estático.
+- Build: `npx expo export --platform web`
+- Diretório público: `dist`

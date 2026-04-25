@@ -1,243 +1,109 @@
-import { useEffect, useMemo, useState } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import { router } from "expo-router";
-import { ValorantCard } from "../components/ValorantCard";
-import { RoleCard } from "../components/RoleCard";
-
-const roles = [
-  {
-    label: "Duelista",
-    value: "Duelist",
-    image:
-      "https://media.valorant-api.com/gamemodes/96bd3920-4f36-d026-2b28-c683eb0bcac5/displayicon.png",
-  },
-  {
-    label: "Controlador",
-    value: "Controller",
-    image:
-      "https://media.valorant-api.com/gamemodes/96bd3920-4f36-d026-2b28-c683eb0bcac5/displayicon.png",
-  },
-  {
-    label: "Sentinela",
-    value: "Sentinel",
-    image:
-      "https://media.valorant-api.com/gamemodes/96bd3920-4f36-d026-2b28-c683eb0bcac5/displayicon.png",
-  },
-  {
-    label: "Iniciador",
-    value: "Initiator",
-    image:
-      "https://media.valorant-api.com/gamemodes/96bd3920-4f36-d026-2b28-c683eb0bcac5/displayicon.png",
-  },
-];
+import { Feather } from "@expo/vector-icons";
+import { useState } from "react";
+import { FlatList, Platform, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ScreenHeader } from "../components/ScreenHeader";
+import { AGENTS } from "../data/mock/agents";
+import { useColors } from "../hooks/useColors";
 
 export default function AgentsScreen() {
-  const [agents, setAgents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [erro, setErro] = useState("");
-  const [selectedRole, setSelectedRole] = useState(null);
+  const colors = useColors();
+  const insets = useSafeAreaInsets();
+  const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    async function buscarAgents() {
-      try {
-        const response = await fetch("https://valorant-api.com/v1/agents");
-        const json = await response.json();
-
-        const agentsValidos = json.data.filter((item) => {
-          const image =
-            item.fullPortrait ||
-            item.fullPortraitV2 ||
-            item.bustPortrait ||
-            item.displayIcon;
-
-          return item.isPlayableCharacter && image;
-        });
-
-        setAgents(agentsValidos);
-      } catch (error) {
-        console.log("Erro ao buscar agents:", error);
-        setErro("Não foi possível carregar os agentes.");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    buscarAgents();
-  }, []);
-
-  const filteredAgents = useMemo(() => {
-    if (!selectedRole) return [];
-
-    return agents.filter(
-      (item) => item.role?.displayName === selectedRole
-    );
-  }, [agents, selectedRole]);
-
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#fff" />
-      </View>
-    );
-  }
-
-  if (erro) {
-    return (
-      <View style={styles.loadingContainer}>
-        <Text style={styles.feedbackText}>{erro}</Text>
-      </View>
-    );
-  }
+  const bottomPad = Platform.OS === "web" ? 34 : insets.bottom;
+  const filtered = AGENTS.filter((a) =>
+    a.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
-    <View style={styles.container}>
-      {!selectedRole ? (
-        <>
-          <Text style={styles.title}>Funções dos Agentes</Text>
+    <View style={[styles.root, { backgroundColor: colors.background }]}>
+      <ScreenHeader title="Agentes" />
 
-          <FlatList
-            data={roles}
-            keyExtractor={(item) => item.value}
-            numColumns={2}
-            contentContainerStyle={styles.listContent}
-            columnWrapperStyle={styles.row}
-            renderItem={({ item }) => (
-              <RoleCard
-                title={item.label}
-                image={item.image}
-                onPress={() => setSelectedRole(item.value)}
-              />
-            )}
+      <View style={{ marginHorizontal: 16, marginBottom: 12 }}>
+        <View style={[styles.searchBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <Feather name="search" size={16} color={colors.textSecondary} />
+          <TextInput
+            style={[styles.searchInput, { color: colors.foreground }]}
+            placeholder="Buscar agente..."
+            placeholderTextColor={colors.textTertiary}
+            value={search}
+            onChangeText={setSearch}
           />
-        </>
-      ) : (
-        <>
-          <View style={styles.header}>
-            <Pressable
-              onPress={() => setSelectedRole(null)}
-              style={({ hovered, pressed }) => [
-                styles.backButton,
-                hovered && styles.backHover,
-                pressed && styles.backPressed,
-              ]}
-            >
-              <Text style={styles.backButtonText}>Voltar</Text>
+          {search ? (
+            <Pressable onPress={() => setSearch("")}>
+              <Feather name="x" size={16} color={colors.textSecondary} />
             </Pressable>
+          ) : null}
+        </View>
+      </View>
 
-            <Text style={styles.title}>
-              {roles.find((role) => role.value === selectedRole)?.label}
+      <FlatList
+        data={filtered}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: bottomPad + 20 }}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <View style={[styles.agentCard, { backgroundColor: item.color }]}>
+            <View style={styles.agentOverlay} />
+            <View style={[styles.agentIconBubble, { backgroundColor: "rgba(255,255,255,0.18)" }]}>
+              <Feather name={item.icon} size={42} color="#fff" />
+            </View>
+            <View style={styles.agentInfo}>
+              <View style={[styles.roleBadge, { backgroundColor: "rgba(255,255,255,0.18)" }]}>
+                <Text style={styles.roleText}>{item.role}</Text>
+              </View>
+              <Text style={styles.agentName} numberOfLines={1}>
+                {item.name}
+              </Text>
+            </View>
+          </View>
+        )}
+        ListEmptyComponent={
+          <View style={styles.empty}>
+            <Feather name="search" size={32} color={colors.textSecondary} />
+            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+              Nenhum agente encontrado
             </Text>
           </View>
-
-          <FlatList
-            data={filteredAgents}
-            keyExtractor={(item) => item.uuid}
-            numColumns={2}
-            contentContainerStyle={styles.listContent}
-            columnWrapperStyle={styles.row}
-            renderItem={({ item }) => {
-              const image =
-                item.fullPortrait ||
-                item.fullPortraitV2 ||
-                item.bustPortrait ||
-                item.displayIcon;
-
-              return (
-                <ValorantCard
-                  title={item.displayName}
-                  image={image}
-                  subtitle={item.role?.displayName || "Sem função"}
-                  onPress={() =>
-                    router.push({
-                      pathname: "/detalhe",
-                      params: {
-                        id: item.uuid,
-                        nome: item.displayName,
-                        funcao: item.role?.displayName || "Sem função",
-                      },
-                    })
-                  }
-                />
-              );
-            }}
-            ListEmptyComponent={
-              <Text style={styles.emptyText}>
-                Nenhum agente encontrado para essa função.
-              </Text>
-            }
-          />
-        </>
-      )}
+        }
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#791212",
-    paddingTop: 16,
+  root: { flex: 1 },
+  searchBox: {
+    flexDirection: "row", alignItems: "center",
+    borderRadius: 12, borderWidth: 1,
+    paddingHorizontal: 12, height: 44, gap: 8,
   },
-  loadingContainer: {
-    flex: 1,
-    backgroundColor: "#791212",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
+  searchInput: { flex: 1, fontSize: 14, fontFamily: "Inter_400Regular", outlineStyle: "none" },
+  row: { gap: 10, marginBottom: 10 },
+  agentCard: {
+    flex: 1, height: 200, borderRadius: 14,
+    overflow: "hidden", position: "relative",
   },
-  feedbackText: {
-    color: "#fff",
-    fontSize: 16,
-    textAlign: "center",
+  agentOverlay: {
+    position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
+    backgroundColor: "rgba(0,0,0,0.30)",
   },
-  title: {
-    color: "#fff",
-    fontSize: 24,
-    fontWeight: "700",
-    paddingHorizontal: 16,
-    marginBottom: 12,
+  agentIconBubble: {
+    position: "absolute", top: 18, right: 12,
+    width: 64, height: 64, borderRadius: 18,
+    alignItems: "center", justifyContent: "center",
   },
-  header: {
-    paddingHorizontal: 16,
-    marginBottom: 8,
-  },
-  backButton: {
+  agentInfo: { position: "absolute", bottom: 12, left: 12, right: 12 },
+  roleBadge: {
     alignSelf: "flex-start",
-    backgroundColor: "#1f1f1f",
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    borderRadius: 10,
-    marginBottom: 12,
+    paddingHorizontal: 8, paddingVertical: 3,
+    borderRadius: 6, marginBottom: 6,
   },
-  backHover: {
-    opacity: 0.85,
-  },
-  backPressed: {
-    opacity: 0.7,
-  },
-  backButtonText: {
-    color: "#fff",
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  listContent: {
-    padding: 16,
-  },
-  row: {
-    justifyContent: "space-between",
-    marginBottom: 16,
-  },
-  emptyText: {
-    color: "#fff",
-    textAlign: "center",
-    marginTop: 40,
-    fontSize: 15,
-  },
+  roleText: { color: "#fff", fontSize: 10, fontFamily: "Inter_500Medium" },
+  agentName: { color: "#fff", fontSize: 16, fontFamily: "Inter_700Bold" },
+  empty: { alignItems: "center", paddingTop: 60, gap: 12 },
+  emptyText: { fontSize: 15, fontFamily: "Inter_400Regular" },
 });

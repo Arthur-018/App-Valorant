@@ -1,0 +1,18 @@
+export const WEAPONS = [
+  { id: "vandal", name: "Vandal", category: "Rifle", cost: 2900, damage: 39, fireRate: 9.75 },
+  { id: "phantom", name: "Phantom", category: "Rifle", cost: 2900, damage: 39, fireRate: 11.0 },
+  { id: "operator", name: "Operator", category: "Sniper", cost: 4700, damage: 255, fireRate: 0.6 },
+  { id: "guardian", name: "Guardian", category: "Rifle", cost: 2250, damage: 65, fireRate: 5.25 },
+  { id: "bulldog", name: "Bulldog", category: "Rifle", cost: 2050, damage: 35, fireRate: 9.15 },
+  { id: "spectre", name: "Spectre", category: "SMG", cost: 1600, damage: 26, fireRate: 13.33 },
+  { id: "stinger", name: "Stinger", category: "SMG", cost: 1100, damage: 27, fireRate: 16.0 },
+  { id: "judge", name: "Judge", category: "Shotgun", cost: 1850, damage: 17, fireRate: 3.5 },
+  { id: "bucky", name: "Bucky", category: "Shotgun", cost: 850, damage: 20, fireRate: 1.1 },
+  { id: "ares", name: "Ares", category: "Heavy", cost: 1600, damage: 30, fireRate: 13.0 },
+  { id: "odin", name: "Odin", category: "Heavy", cost: 3200, damage: 38, fireRate: 12.0 },
+  { id: "marshal", name: "Marshal", category: "Sniper", cost: 950, damage: 101, fireRate: 1.5 },
+  { id: "sheriff", name: "Sheriff", category: "Pistol", cost: 800, damage: 55, fireRate: 4.0 },
+  { id: "ghost", name: "Ghost", category: "Pistol", cost: 500, damage: 30, fireRate: 6.75 },
+  { id: "frenzy", name: "Frenzy", category: "Pistol", cost: 450, damage: 26, fireRate: 10.0 },
+  { id: "classic", name: "Classic", category: "Pistol", cost: 0, damage: 26, fireRate: 6.75 },
+];
