@@ -1,0 +1,127 @@
+Você está trabalhando em um projeto de aplicativo mobile utilizando Expo + React Native + TypeScript.
+
+IMPORTANTE:
+- NÃO criar um site
+- NÃO usar Vite/Web
+- O projeto deve ser um app mobile real (Expo)
+- Baseie-se totalmente no app existente "Valorant app-post"
+- Recrie a mesma estrutura visual e de navegação
+- NÃO adicionar funcionalidades que violem políticas da Riot
+- NÃO usar dados reais de jogador ainda
+
+OBJETIVO:
+Criar um novo app chamado "Valorant Hub" com base no protótipo já existente, mantendo a mesma experiência visual, mas preparado para evolução futura (OAuth + stats reais).
+
+---
+
+# 📱 ESTRUTURA DO APP
+
+O app deve ter:
+
+## 🔐 Tela de Login (simples)
+- Tela inicial com botão "Entrar"
+- NÃO precisa autenticação real
+- Apenas navegação para o app
+
+---
+
+## 🏠 Home
+- Tela principal com navegação
+- Cards ou botões para:
+  - Agentes
+  - Armas
+  - Mapas
+  - Perfil
+
+---
+
+## 🎮 Agentes
+- Lista visual de agentes
+- Nome + imagem
+- Dados estáticos/mockados
+
+---
+
+## 🔫 Armas
+- Lista de armas
+- Nome + categoria
+- Dados mockados
+
+---
+
+## 🗺️ Mapas
+- Lista de mapas
+- Nome + imagem
+- Dados mockados
+
+---
+
+## 👤 Perfil (IMPORTANTE)
+- NÃO usar Riot API ainda
+- NÃO permitir busca de jogador
+- NÃO mostrar:
+  - KDA
+  - winrate
+  - histórico de partidas
+- Mostrar apenas:
+  - Nome fictício
+  - Layout de perfil
+  - Mensagem:
+
+"Estatísticas completas estarão disponíveis após integração com Riot Sign On (RSO)."
+
+---
+
+# 🎨 UI/UX
+
+- Design moderno estilo Valorant
+- Tema escuro
+- Cards bem organizados
+- Navegação simples (tabs ou stack)
+
+---
+
+# 🧠 REGRAS IMPORTANTES (CRÍTICO)
+
+- NÃO implementar:
+  - Match history
+  - Player stats reais
+  - KDA / ACS / Winrate
+  - Busca de Riot ID
+- NÃO usar Riot API ainda
+- NÃO usar WebView
+- NÃO criar store checker
+
+---
+
+# 🏗️ ARQUITETURA
+
+- Expo Router ou React Navigation
+- Componentização limpa
+- Separação:
+  - screens/
+  - components/
+  - data/mock/
+
+---
+
+# 🚀 PREPARAÇÃO FUTURA
+
+Deixar o app pronto para:
+
+- integração com backend
+- login com Riot (OAuth RSO)
+- consumo de API futuramente
+
+Mas NÃO implementar agora.
+
+---
+
+# 📦 RESULTADO ESPERADO
+
+Um app mobile funcional que:
+
+- replica o visual do "Valorant app-post"
+- não quebra nenhuma regra da Riot
+- serve como base para evolução futura
+- pode ser testado via Expo Go
