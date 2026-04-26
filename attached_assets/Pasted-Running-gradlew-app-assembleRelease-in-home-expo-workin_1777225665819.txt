@@ -1,0 +1,384 @@
+Running 'gradlew :app:assembleRelease' in /home/expo/workingdir/build/android
+Downloading https://services.gradle.org/distributions/gradle-8.8-all.zip
+10%.
+20%.
+30%.
+40%.
+50%.
+60%.
+70%.
+80%.
+90%.
+100%
+Welcome to Gradle 8.8!
+Here are the highlights of this release:
+- Running Gradle on Java 22
+- Configurable Gradle daemon JVM
+- Improved IDE performance for large projects
+For more details see https://docs.gradle.org/8.8/release-notes.html
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :react-settings-plugin:checkKotlinGradlePluginConfigurationErrors
+> Task :react-settings-plugin:pluginDescriptors
+> Task :react-settings-plugin:processResources
+> Task :react-settings-plugin:compileKotlin
+> Task :react-settings-plugin:compileJava NO-SOURCE
+> Task :react-settings-plugin:classes
+> Task :react-settings-plugin:jar
+> Task :gradle-plugin:checkKotlinGradlePluginConfigurationErrors
+> Task :gradle-plugin:pluginDescriptors
+> Task :gradle-plugin:processResources
+> Task :gradle-plugin:compileKotlin
+> Task :gradle-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:classes
+> Task :gradle-plugin:jar
+> Configure project :expo
+Using expo modules
+  - [32mexpo-asset[0m (10.0.10)
+  - [32mexpo-constants[0m (16.0.2)
+  - [32mexpo-file-system[0m (17.0.1)
+  - [32mexpo-font[0m (12.0.10)
+  - [32mexpo-keep-awake[0m (13.0.2)
+  - [32mexpo-modules-core[0m (1.12.26)
+  - [32mexpo-splash-screen[0m (0.27.7)
+> Task :expo-file-system:preBuild UP-TO-DATE
+> Task :expo-asset:preBuild UP-TO-DATE
+> Task :expo-modules-core:preBuild UP-TO-DATE
+> Task :expo-modules-core:preReleaseBuild UP-TO-DATE
+> Task :expo-file-system:preReleaseBuild UP-TO-DATE
+> Task :expo-keep-awake:preBuild UP-TO-DATE
+> Task :expo-font:preBuild UP-TO-DATE
+> Task :expo-asset:preReleaseBuild UP-TO-DATE
+> Task :expo-keep-awake:preReleaseBuild UP-TO-DATE
+> Task :expo-font:preReleaseBuild UP-TO-DATE
+> Task :expo-file-system:writeReleaseAarMetadata
+> Task :expo-modules-core:writeReleaseAarMetadata
+> Task :expo-asset:writeReleaseAarMetadata
+> Task :expo-keep-awake:writeReleaseAarMetadata
+> Task :react-native-safe-area-context:preBuild UP-TO-DATE
+> Task :react-native-safe-area-context:preReleaseBuild UP-TO-DATE
+> Task :expo-font:writeReleaseAarMetadata
+> Task :expo-splash-screen:preBuild UP-TO-DATE
+> Task :expo-splash-screen:preReleaseBuild UP-TO-DATE
+> Task :expo-file-system:generateReleaseResValues
+> Task :expo-file-system:generateReleaseResources
+> Task :expo-font:generateReleaseResValues
+> Task :expo-font:generateReleaseResources
+> Task :expo-asset:generateReleaseResValues
+> Task :expo-asset:generateReleaseResources
+> Task :react-native-safe-area-context:writeReleaseAarMetadata
+> Task :expo-splash-screen:writeReleaseAarMetadata
+> Task :expo-keep-awake:generateReleaseResValues
+> Task :expo-modules-core:generateReleaseResValues
+> Task :expo-keep-awake:generateReleaseResources
+> Task :expo-modules-core:generateReleaseResources
+> Task :expo-constants:createExpoConfig
+> Task :expo-constants:preBuild
+> Task :expo-constants:preReleaseBuild
+> Task :expo-constants:writeReleaseAarMetadata
+The NODE_ENV environment variable is required but was not specified. Ensure the project is bundled with Expo CLI or NODE_ENV is set.
+Proceeding without mode-specific .env
+> Task :expo-constants:generateReleaseResValues
+> Task :expo-constants:generateReleaseResources
+> Task :expo-file-system:packageReleaseResources
+> Task :expo-keep-awake:packageReleaseResources
+> Task :expo-font:packageReleaseResources
+> Task :expo-modules-core:packageReleaseResources
+> Task :expo-asset:packageReleaseResources
+> Task :react-native-safe-area-context:generateReleaseResValues
+> Task :react-native-safe-area-context:generateReleaseResources
+> Task :expo-file-system:extractDeepLinksRelease
+> Task :expo-asset:extractDeepLinksRelease
+> Task :expo-font:extractDeepLinksRelease
+> Task :expo-constants:packageReleaseResources
+> Task :expo-splash-screen:generateReleaseResValues
+> Task :expo-splash-screen:generateReleaseResources
+> Task :react-native-safe-area-context:packageReleaseResources
+> Task :expo-constants:extractDeepLinksRelease
+> Task :expo-keep-awake:extractDeepLinksRelease
+> Task :expo:generateExpoModulesPackageListTask
+> Task :expo:preBuild
+> Task :expo:preReleaseBuild
+> Task :expo:writeReleaseAarMetadata
+> Task :expo:generateReleaseResValues
+> Task :expo:generateReleaseResources
+> Task :expo:packageReleaseResources
+> Task :expo:extractDeepLinksRelease
+> Task :expo-splash-screen:packageReleaseResources
+> Task :expo-modules-core:extractDeepLinksRelease
+> Task :expo-keep-awake:processReleaseManifest
+> Task :expo-asset:processReleaseManifest
+> Task :expo-file-system:processReleaseManifest
+/home/expo/workingdir/build/node_modules/expo-file-system/android/src/main/AndroidManifest.xml:6:9-8:20 Warning:
+	provider#expo.modules.filesystem.FileSystemFileProvider@android:authorities was tagged at AndroidManifest.xml:6 to replace other declarations but no other declaration present
+> Task :expo:processReleaseManifest
+> Task :expo-font:processReleaseManifest
+> Task :expo-constants:processReleaseManifest
+> Task :expo-modules-core:processReleaseManifest
+/home/expo/workingdir/build/node_modules/expo-modules-core/android/src/main/AndroidManifest.xml:8:9-11:45 Warning:
+	meta-data#com.facebook.soloader.enabled@android:value was tagged at AndroidManifest.xml:8 to replace other declarations but no other declaration present
+> Task :react-native-safe-area-context:extractDeepLinksRelease
+> Task :expo-splash-screen:extractDeepLinksRelease
+> Task :expo-splash-screen:processReleaseManifest
+> Task :react-native-safe-area-context:processReleaseManifest
+package="com.th3rdwave.safeareacontext" found in source AndroidManifest.xml: /home/expo/workingdir/build/node_modules/react-native-safe-area-context/android/src/main/AndroidManifest.xml.
+Setting the namespace via the package attribute in the source AndroidManifest.xml is no longer supported, and the value is ignored.
+Recommendation: remove package="com.th3rdwave.safeareacontext" from the source AndroidManifest.xml: /home/expo/workingdir/build/node_modules/react-native-safe-area-context/android/src/main/AndroidManifest.xml.
+> Task :expo-keep-awake:compileReleaseLibraryResources
+> Task :expo-modules-core:compileReleaseLibraryResources
+> Task :expo-asset:compileReleaseLibraryResources
+> Task :expo:compileReleaseLibraryResources
+> Task :expo-constants:compileReleaseLibraryResources
+> Task :expo:parseReleaseLocalResources
+> Task :expo-font:compileReleaseLibraryResources
+> Task :expo-constants:parseReleaseLocalResources
+> Task :expo-font:parseReleaseLocalResources
+> Task :expo-asset:parseReleaseLocalResources
+> Task :expo-asset:generateReleaseRFile
+> Task :expo:generateReleaseRFile
+> Task :expo-keep-awake:parseReleaseLocalResources
+> Task :expo-keep-awake:generateReleaseRFile
+> Task :expo-splash-screen:parseReleaseLocalResources
+> Task :expo-file-system:parseReleaseLocalResources
+> Task :expo-file-system:generateReleaseRFile
+> Task :expo-font:generateReleaseRFile
+> Task :expo-splash-screen:generateReleaseRFile
+> Task :expo:checkKotlinGradlePluginConfigurationErrors
+> Task :expo:generateReleaseBuildConfig
+> Task :expo-asset:checkKotlinGradlePluginConfigurationErrors
+> Task :expo-asset:generateReleaseBuildConfig
+> Task :expo-modules-core:checkKotlinGradlePluginConfigurationErrors
+> Task :expo-modules-core:generateReleaseBuildConfig
+> Task :expo-constants:generateReleaseRFile
+> Task :expo-asset:javaPreCompileRelease
+> Task :expo-constants:checkKotlinGradlePluginConfigurationErrors
+> Task :expo-constants:generateReleaseBuildConfig
+> Task :expo-modules-core:parseReleaseLocalResources
+> Task :expo-file-system:compileReleaseLibraryResources
+> Task :expo-file-system:checkKotlinGradlePluginConfigurationErrors
+> Task :expo-file-system:generateReleaseBuildConfig
+> Task :react-native-safe-area-context:parseReleaseLocalResources
+> Task :expo-modules-core:generateReleaseRFile
+> Task :expo-constants:javaPreCompileRelease
+> Task :expo-font:checkKotlinGradlePluginConfigurationErrors
+> Task :expo-file-system:javaPreCompileRelease
+> Task :react-native-safe-area-context:generateReleaseRFile
+> Task :expo-keep-awake:checkKotlinGradlePluginConfigurationErrors
+> Task :expo-splash-screen:checkKotlinGradlePluginConfigurationErrors
+> Task :expo-font:generateReleaseBuildConfig
+> Task :expo-keep-awake:generateReleaseBuildConfig
+> Task :expo-splash-screen:generateReleaseBuildConfig
+> Task :expo-modules-core:javaPreCompileRelease
+> Task :expo-keep-awake:javaPreCompileRelease
+> Task :react-native-safe-area-context:checkKotlinGradlePluginConfigurationErrors
+> Task :react-native-safe-area-context:compileReleaseLibraryResources
+> Task :expo-splash-screen:compileReleaseLibraryResources
+> Task :react-native-safe-area-context:generateReleaseBuildConfig
+> Task :expo-splash-screen:javaPreCompileRelease
+> Task :expo-asset:mergeReleaseJniLibFolders
+> Task :expo-font:javaPreCompileRelease
+> Task :expo-asset:mergeReleaseNativeLibs NO-SOURCE
+> Task :expo-asset:stripReleaseDebugSymbols NO-SOURCE
+> Task :expo:mergeReleaseJniLibFolders
+> Task :expo:mergeReleaseNativeLibs NO-SOURCE
+> Task :expo:stripReleaseDebugSymbols NO-SOURCE
+> Task :expo:javaPreCompileRelease
+> Task :expo:extractDeepLinksForAarRelease
+> Task :expo-asset:copyReleaseJniLibsProjectAndLocalJars
+> Task :expo:copyReleaseJniLibsProjectAndLocalJars
+> Task :expo-asset:extractDeepLinksForAarRelease
+> Task :expo:mergeReleaseShaders
+> Task :expo:compileReleaseShaders NO-SOURCE
+> Task :expo:generateReleaseAssets UP-TO-DATE
+> Task :expo-file-system:mergeReleaseJniLibFolders
+> Task :expo-asset:mergeReleaseShaders
+> Task :expo-file-system:mergeReleaseNativeLibs
+NO-SOURCE
+> Task :expo-asset:compileReleaseShaders NO-SOURCE
+> Task :expo-file-system:stripReleaseDebugSymbols NO-SOURCE
+> Task :expo-asset:generateReleaseAssets UP-TO-DATE
+> Task :expo-asset:packageReleaseAssets
+> Task :expo:packageReleaseAssets
+> Task :expo-file-system:copyReleaseJniLibsProjectAndLocalJars
+> Task :expo:prepareReleaseArtProfile
+> Task :expo:prepareLintJarForPublish
+> Task :expo-asset:prepareReleaseArtProfile
+> Task :expo-file-system:extractDeepLinksForAarRelease
+> Task :expo-constants:mergeReleaseJniLibFolders
+> Task :expo-constants:mergeReleaseNativeLibs NO-SOURCE
+> Task :expo-asset:prepareLintJarForPublish
+> Task :expo-font:mergeReleaseJniLibFolders
+> Task :expo-constants:stripReleaseDebugSymbols NO-SOURCE
+> Task :expo-font:mergeReleaseNativeLibs NO-SOURCE
+> Task :expo-font:stripReleaseDebugSymbols NO-SOURCE
+> Task :expo-constants:copyReleaseJniLibsProjectAndLocalJars
+> Task :expo-keep-awake:mergeReleaseJniLibFolders
+> Task :expo-keep-awake:mergeReleaseNativeLibs NO-SOURCE
+> Task :expo-constants:extractDeepLinksForAarRelease
+> Task :expo-file-system:mergeReleaseShaders
+> Task :expo-font:extractDeepLinksForAarRelease
+> Task :expo-file-system:compileReleaseShaders NO-SOURCE
+> Task :expo-file-system:generateReleaseAssets UP-TO-DATE
+> Task :expo-font:copyReleaseJniLibsProjectAndLocalJars
+> Task :expo-font:mergeReleaseShaders
+> Task :expo-font:compileReleaseShaders NO-SOURCE
+> Task :expo-font:generateReleaseAssets UP-TO-DATE
+> Task :expo-keep-awake:stripReleaseDebugSymbols NO-SOURCE
+> Task :expo-constants:mergeReleaseShaders
+> Task :expo-font:packageReleaseAssets
+> Task :expo-keep-awake:copyReleaseJniLibsProjectAndLocalJars
+> Task :expo-constants:compileReleaseShaders NO-SOURCE
+> Task :expo-constants:generateReleaseAssets UP-TO-DATE
+> Task :expo-file-system:packageReleaseAssets
+> Task :expo-keep-awake:extractDeepLinksForAarRelease
+> Task :expo-font:prepareReleaseArtProfile
+> Task :expo-file-system:prepareLintJarForPublish
+> Task :expo-font:prepareLintJarForPublish
+> Task :expo-file-system:prepareReleaseArtProfile
+> Task :expo-constants:packageReleaseAssets
+> Task :expo-keep-awake:mergeReleaseShaders
+> Task :expo-splash-screen:mergeReleaseJniLibFolders
+> Task :expo-keep-awake:compileReleaseShaders NO-SOURCE
+> Task :expo-keep-awake:generateReleaseAssets UP-TO-DATE
+> Task :expo-constants:prepareReleaseArtProfile
+> Task :expo:extractProguardFiles
+> Task :expo-splash-screen:mergeReleaseNativeLibs NO-SOURCE
+> Task :expo:writeReleaseLintModelMetadata
+> Task :expo-constants:prepareLintJarForPublish
+> Task :expo-splash-screen:stripReleaseDebugSymbols NO-SOURCE
+> Task :expo-keep-awake:packageReleaseAssets
+> Task :expo-constants:extractProguardFiles
+> Task :expo-asset:extractProguardFiles
+> Task :expo-splash-screen:extractDeepLinksForAarRelease
+> Task :expo-asset:writeReleaseLintModelMetadata
+> Task :expo-splash-screen:copyReleaseJniLibsProjectAndLocalJars
+> Task :expo-keep-awake:prepareReleaseArtProfile
+> Task :expo-constants:writeReleaseLintModelMetadata
+> Task :expo-file-system:extractProguardFiles
+> Task :expo-splash-screen:mergeReleaseShaders
+> Task :expo-splash-screen:compileReleaseShaders NO-SOURCE
+> Task :expo-splash-screen:generateReleaseAssets UP-TO-DATE
+> Task :expo-file-system:writeReleaseLintModelMetadata
+> Task :expo-font:extractProguardFiles
+> Task :expo-font:writeReleaseLintModelMetadata
+> Task :expo-keep-awake:prepareLintJarForPublish
+> Task :expo-keep-awake:extractProguardFiles
+> Task :expo:copyReleaseJniLibsProjectOnly
+> Task :expo-splash-screen:packageReleaseAssets
+> Task :expo-keep-awake:writeReleaseLintModelMetadata
+> Task :expo-constants:copyReleaseJniLibsProjectOnly
+> Task :expo-splash-screen:prepareLintJarForPublish
+> Task :expo-asset:copyReleaseJniLibsProjectOnly
+> Task :expo-splash-screen:prepareReleaseArtProfile
+> Task :expo-font:copyReleaseJniLibsProjectOnly
+> Task :expo-file-system:copyReleaseJniLibsProjectOnly
+> Task :expo-keep-awake:copyReleaseJniLibsProjectOnly
+> Task :expo-splash-screen:extractProguardFiles
+> Task :expo-splash-screen:writeReleaseLintModelMetadata
+> Task :expo-splash-screen:copyReleaseJniLibsProjectOnly
+> Task :app:buildKotlinToolingMetadata
+> Task :app:checkKotlinGradlePluginConfigurationErrors
+> Task :app:generateCodegenSchemaFromJavaScript SKIPPED
+> Task :app:generateCodegenArtifactsFromSchema SKIPPED
+> Task :app:generatePackageList
+> Task :app:preBuild
+> Task :app:preReleaseBuild
+> Task :app:generateReleaseBuildConfig
+> Task :react-native-safe-area-context:javaPreCompileRelease
+> Task :react-native-safe-area-context:mergeReleaseJniLibFolders
+> Task :react-native-safe-area-context:mergeReleaseNativeLibs NO-SOURCE
+> Task :react-native-safe-area-context:stripReleaseDebugSymbols
+NO-SOURCE
+> Task :react-native-safe-area-context:copyReleaseJniLibsProjectAndLocalJars
+> Task :react-native-safe-area-context:extractDeepLinksForAarRelease
+> Task :react-native-safe-area-context:mergeReleaseShaders
+> Task :react-native-safe-area-context:compileReleaseShaders NO-SOURCE
+> Task :react-native-safe-area-context:generateReleaseAssets UP-TO-DATE
+> Task :react-native-safe-area-context:packageReleaseAssets
+> Task :react-native-safe-area-context:prepareLintJarForPublish
+> Task :react-native-safe-area-context:prepareReleaseArtProfile
+> Task :react-native-safe-area-context:extractProguardFiles
+> Task :react-native-safe-area-context:writeReleaseLintModelMetadata
+> Task :react-native-safe-area-context:copyReleaseJniLibsProjectOnly
+> Task :expo-modules-core:configureCMakeRelWithDebInfo[arm64-v8a]
+Checking the license for package CMake 3.22.1 in /home/expo/Android/Sdk/licenses
+License for package CMake 3.22.1 accepted.
+Preparing "Install CMake 3.22.1 v.3.22.1".
+"Install CMake 3.22.1 v.3.22.1" ready.
+Installing CMake 3.22.1 in /home/expo/Android/Sdk/cmake/3.22.1
+"Install CMake 3.22.1 v.3.22.1" complete.
+"Install CMake 3.22.1 v.3.22.1" finished.
+> Task :react-native-safe-area-context:compileReleaseKotlin
+w: file:///home/expo/workingdir/build/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaContextPackage.kt:27:11 'constructor ReactModuleInfo(String!, String!, Boolean, Boolean, Boolean, Boolean, Boolean)' is deprecated. Deprecated in Java
+w: file:///home/expo/workingdir/build/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaContextPackage.kt:33:27 'hasConstants: Boolean' is deprecated. Deprecated in Java
+w: file:///home/expo/workingdir/build/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaView.kt:59:23 'getter for uiImplementation: UIImplementation!' is deprecated. Deprecated in Java
+> Task :app:checkReleaseAarMetadata
+> Task :react-native-safe-area-context:compileReleaseJavaWithJavac
+Note: /home/expo/workingdir/build/node_modules/react-native-safe-area-context/android/src/paper/java/com/th3rdwave/safeareacontext/NativeSafeAreaContextSpec.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+> Task :app:createBundleReleaseJsAndAssets
+Starting Metro Bundler
+warning: Bundler cache is empty, rebuilding (this may take a minute)
+> Task :react-native-safe-area-context:bundleLibRuntimeToJarRelease
+> Task :react-native-safe-area-context:bundleLibCompileToJarRelease
+> Task :react-native-safe-area-context:processReleaseJavaRes
+> Task :react-native-safe-area-context:createFullJarRelease
+> Task :react-native-safe-area-context:extractReleaseAnnotations
+> Task :react-native-safe-area-context:mergeReleaseGeneratedProguardFiles
+> Task :react-native-safe-area-context:mergeReleaseConsumerProguardFiles
+> Task :react-native-safe-area-context:mergeReleaseJavaResource
+> Task :expo-modules-core:compileReleaseKotlin
+> Task :app:createBundleReleaseJsAndAssets FAILED
+Android Bundling failed 17319ms node_modules/expo-router/entry.js (869 modules)
+Error: Unable to resolve module expo-linking from /home/expo/workingdir/build/node_modules/expo-router/build/global-state/routing.js: expo-linking could not be found within the project or in these directories:
+  node_modules/expo-router/node_modules
+  node_modules
+[0m [90m 26 | [39mexports[33m.[39mlinkTo [33m=[39m exports[33m.[39msetParams [33m=[39m exports[33m.[39mcanDismiss [33m=[39m exports[33m.[39mcanGoBack [33m=[39m exports[33m.[39mgoBack [33m=[39m exports[33m.[39mdismissAll [33m=[39m exports[33m.[39mreplace [33m=[39m exports[33m.[39mdismiss [33m=[39m exports[33m.[39mpush [33m=[39m exports[33m.[39mnavigate [33m=[39m [36mvoid[39m [35m0[39m[33m;[39m[0m
+[0m [90m 27 | [39m[36mconst[39m native_1 [33m=[39m require([32m"@react-navigation/native"[39m)[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 28 | [39m[36mconst[39m [33mLinking[39m [33m=[39m __importStar(require([32m"expo-linking"[39m))[33m;[39m[0m
+[0m [90m    | [39m                                      [31m[1m^[22m[39m[0m
+[0m [90m 29 | [39m[36mconst[39m non_secure_1 [33m=[39m require([32m"nanoid/non-secure"[39m)[33m;[39m[0m
+[0m [90m 30 | [39m[36mconst[39m href_1 [33m=[39m require([32m"../link/href"[39m)[33m;[39m[0m
+[0m [90m 31 | [39m[36mconst[39m path_1 [33m=[39m require([32m"../link/path"[39m)[33m;[39m[0m
+Error: Unable to resolve module expo-linking from /home/expo/workingdir/build/node_modules/expo-router/build/global-state/routing.js: expo-linking could not be found within the project or in these directories:
+  node_modules/expo-router/node_modules
+  node_modules
+[0m [90m 26 | [39mexports[33m.[39mlinkTo [33m=[39m exports[33m.[39msetParams [33m=[39m exports[33m.[39mcanDismiss [33m=[39m exports[33m.[39mcanGoBack [33m=[39m exports[33m.[39mgoBack [33m=[39m exports[33m.[39mdismissAll [33m=[39m exports[33m.[39mreplace [33m=[39m exports[33m.[39mdismiss [33m=[39m exports[33m.[39mpush [33m=[39m exports[33m.[39mnavigate [33m=[39m [36mvoid[39m [35m0[39m[33m;[39m[0m
+[0m [90m 27 | [39m[36mconst[39m native_1 [33m=[39m require([32m"@react-navigation/native"[39m)[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 28 | [39m[36mconst[39m [33mLinking[39m [33m=[39m __importStar(require([32m"expo-linking"[39m))[33m;[39m[0m
+[0m [90m    | [39m                                      [31m[1m^[22m[39m[0m
+[0m [90m 29 | [39m[36mconst[39m non_secure_1 [33m=[39m require([32m"nanoid/non-secure"[39m)[33m;[39m[0m
+[0m [90m 30 | [39m[36mconst[39m href_1 [33m=[39m require([32m"../link/href"[39m)[33m;[39m[0m
+[0m [90m 31 | [39m[36mconst[39m path_1 [33m=[39m require([32m"../link/path"[39m)[33m;[39m[0m
+    at ModuleResolver.resolveDependency (/home/expo/workingdir/build/node_modules/metro/src/node-haste/DependencyGraph/ModuleResolution.js:139:15)
+    at DependencyGraph.resolveDependency (/home/expo/workingdir/build/node_modules/metro/src/node-haste/DependencyGraph.js:232:43)
+    at /home/expo/workingdir/build/node_modules/metro/src/lib/transformHelpers.js:156:21
+    at resolveDependencies (/home/expo/workingdir/build/node_modules/metro/src/DeltaBundler/buildSubgraph.js:42:25)
+    at visit (/home/expo/workingdir/build/node_modules/metro/src/DeltaBundler/buildSubgraph.js:83:30)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Promise.all (index 7)
+    at visit (/home/expo/workingdir/build/node_modules/metro/src/DeltaBundler/buildSubgraph.js:92:5)
+    at async Promise.all (index 7)
+    at visit (/home/expo/workingdir/build/node_modules/metro/src/DeltaBundler/buildSubgraph.js:92:5)
+> Task :react-native-safe-area-context:generateReleaseLintVitalModel
+> Task :expo-modules-core:buildCMakeRelWithDebInfo[arm64-v8a]
+> Task :expo-modules-core:compileReleaseKotlin
+w: file:///home/expo/workingdir/build/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/permissions/PermissionsService.kt:20:26 'Promise' is deprecated. AsyncFunction will crash when called. Use expo.modules.kotlin.Promise instead
+w: file:///home/expo/workingdir/build/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/permissions/PermissionsService.kt:63:51 'Promise' is deprecated. AsyncFunction will crash when called. Use expo.modules.kotlin.Promise instead
+w: file:///home/expo/workingdir/build/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/permissions/PermissionsService.kt:90:54 'Promise' is deprecated. AsyncFunction will crash when called. Use expo.modules.kotlin.Promise instead
+w: file:///home/expo/workingdir/build/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/defaultmodules/CoreModule.kt:6:34 'ReactFeatureFlags' is deprecated. Deprecated in Java
+w: file:///home/expo/workingdir/build/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/defaultmodules/CoreModule.kt:70:12 'ReactFeatureFlags' is deprecated. Deprecated in Java
+w: file:///home/expo/workingdir/build/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/events/KModuleEventEmitterWrapper.kt:97:7 'constructor Event<T : Event<(raw) Event<*>>!>(Int)' is deprecated. Deprecated in Java
+w: file:///home/expo/workingdir/build/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/types/JSTypeConverterHelper.kt:44:17 'get(String!): Any?' is deprecated. Deprecated in Java
+FAILURE: Build failed with an exception.
+* What went wrong:
+Execution failed for task ':app:createBundleReleaseJsAndAssets'.
+> Process 'command 'node'' finished with non-zero exit value 1
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+BUILD FAILED in 2m 14s
+211 actionable tasks: 211 executed
+Error: Gradle build failed with unknown error. See logs for the "Run gradlew" phase for more information.
