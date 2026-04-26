@@ -1,6 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   Image,
@@ -48,6 +48,31 @@ const LEVEL_ITEM_LABELS = {
 function levelItemLabel(item) {
   if (!item) return "Padrão";
   return LEVEL_ITEM_LABELS[item] || item.replace("EEquippableSkinLevelItem::", "");
+}
+
+function LevelVideo({ src, poster, borderColor }) {
+  if (!src) return null;
+  if (Platform.OS !== "web") {
+    return null;
+  }
+  return (
+    <View style={[styles.videoBox, { borderColor }]}>
+      {React.createElement("video", {
+        src,
+        poster: poster || undefined,
+        controls: true,
+        playsInline: true,
+        preload: "metadata",
+        style: {
+          width: "100%",
+          height: "100%",
+          display: "block",
+          backgroundColor: "#000",
+          borderRadius: 12,
+        },
+      })}
+    </View>
+  );
 }
 
 export default function WeaponSkinsScreen() {
@@ -213,7 +238,10 @@ export default function WeaponSkinsScreen() {
             </Pressable>
 
             {selectedSkin ? (
-              <>
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.modalScrollContent}
+              >
                 <View style={[styles.modalImgBox, { backgroundColor: colors.surfaceElevated }]}>
                   {selectedImg ? (
                     <Image
@@ -286,6 +314,28 @@ export default function WeaponSkinsScreen() {
                   </View>
                 ) : null}
 
+                {currentLevel?.streamedVideo ? (
+                  <View style={styles.videoSection}>
+                    <Text style={[styles.levelsTitle, { color: colors.textSecondary }]}>
+                      Vídeo do nível {safeLevelIdx + 1}
+                    </Text>
+                    {Platform.OS === "web" ? (
+                      <LevelVideo
+                        key={currentLevel.uuid}
+                        src={currentLevel.streamedVideo}
+                        poster={selectedImg}
+                        borderColor={colors.border}
+                      />
+                    ) : (
+                      <Text
+                        style={[styles.videoFallback, { color: colors.textTertiary }]}
+                      >
+                        Pré-visualização do vídeo disponível apenas na versão web.
+                      </Text>
+                    )}
+                  </View>
+                ) : null}
+
                 <View style={[styles.infoBox, { backgroundColor: colors.surfaceElevated }]}>
                   <View style={styles.infoRow}>
                     <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Pacote</Text>
@@ -312,7 +362,7 @@ export default function WeaponSkinsScreen() {
                 <Text style={[styles.releaseNote, { color: colors.textTertiary }]}>
                   A data de lançamento exata não é exposta publicamente pela API.
                 </Text>
-              </>
+              </ScrollView>
             ) : null}
           </Pressable>
         </Pressable>
@@ -364,12 +414,18 @@ const styles = StyleSheet.create({
   modalCard: {
     width: "100%",
     maxWidth: 380,
+    maxHeight: "92%",
     borderRadius: 18,
     borderWidth: 1,
-    padding: 20,
+    paddingHorizontal: 20,
     paddingTop: 24,
+    paddingBottom: 8,
     alignItems: "stretch",
+    overflow: "hidden",
+  },
+  modalScrollContent: {
     gap: 14,
+    paddingBottom: 16,
   },
   closeBtn: {
     position: "absolute",
@@ -432,6 +488,24 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "Inter_400Regular",
     fontStyle: "italic",
+  },
+  videoSection: {
+    gap: 8,
+  },
+  videoBox: {
+    width: "100%",
+    aspectRatio: 16 / 9,
+    borderRadius: 12,
+    borderWidth: 1,
+    overflow: "hidden",
+    backgroundColor: "#000",
+  },
+  videoFallback: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    fontStyle: "italic",
+    textAlign: "center",
+    paddingVertical: 12,
   },
   infoBox: {
     borderRadius: 12,
