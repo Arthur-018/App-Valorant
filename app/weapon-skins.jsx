@@ -10,6 +10,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -87,6 +88,7 @@ export default function WeaponSkinsScreen() {
   const [error, setError] = useState(false);
   const [selectedSkin, setSelectedSkin] = useState(null);
   const [selectedLevelIdx, setSelectedLevelIdx] = useState(0);
+  const [search, setSearch] = useState("");
 
   const openSkinModal = (skin) => {
     setSelectedSkin(skin);
@@ -143,10 +145,17 @@ export default function WeaponSkinsScreen() {
 
   const topPad = Platform.OS === "web" ? Math.max(insets.top, 24) : insets.top;
 
-  const skins = useMemo(
-    () => (weapon?.skins ?? []).filter((s) => getSkinImage(s)),
-    [weapon],
-  );
+  const skins = useMemo(() => {
+    const all = (weapon?.skins ?? []).filter((s) => getSkinImage(s));
+    const q = search.trim().toLowerCase();
+    if (!q) return all;
+    return all.filter((s) => {
+      const name = (s.displayName || "").toLowerCase();
+      const themeName = (themes[s.themeUuid]?.displayName || "").toLowerCase();
+      const tierName = (tiers[s.contentTierUuid]?.displayName || "").toLowerCase();
+      return name.includes(q) || themeName.includes(q) || tierName.includes(q);
+    });
+  }, [weapon, search, themes, tiers]);
 
   if (loading) return <LoadingScreen message="Carregando skins..." />;
   if (error || !weapon) return <ErrorView onRetry={load} />;
@@ -175,6 +184,27 @@ export default function WeaponSkinsScreen() {
           {name ? <Text style={[styles.headerSub, { color: colors.textSecondary }]}>{name}</Text> : null}
         </View>
         <View style={{ width: 38 }} />
+      </View>
+
+      <View style={{ marginHorizontal: 16, marginBottom: 12 }}>
+        <View style={[styles.searchBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <Feather name="search" size={16} color={colors.textSecondary} />
+          <TextInput
+            style={[
+              styles.searchInput,
+              { color: colors.foreground, ...(Platform.OS === "web" ? { outlineStyle: "none" } : {}) },
+            ]}
+            placeholder="Buscar skin, pacote ou edição..."
+            placeholderTextColor={colors.textTertiary}
+            value={search}
+            onChangeText={setSearch}
+          />
+          {search ? (
+            <Pressable onPress={() => setSearch("")} hitSlop={8}>
+              <Feather name="x" size={16} color={colors.textSecondary} />
+            </Pressable>
+          ) : null}
+        </View>
       </View>
 
       <FlatList
@@ -384,6 +414,16 @@ const styles = StyleSheet.create({
   headerTextBox: { alignItems: "center" },
   headerTitle: { fontSize: 18, fontFamily: "Inter_700Bold" },
   headerSub: { fontSize: 12, fontFamily: "Inter_400Regular" },
+  searchBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 12,
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    height: 44,
+    gap: 8,
+  },
+  searchInput: { flex: 1, fontSize: 14, fontFamily: "Inter_400Regular" },
   skinCard: {
     flex: 1,
     borderRadius: 14,
