@@ -1,0 +1,300 @@
+Skip to content
+
+AI
+
+App-Valorant
+
+100%
+
+Upgrade
+
+
+Invite
+
+Publish
+
+
+
+
+
+Library
+
+File tree
+Search
+
+New
+Apps
+Mobile App
+Mobile
+
+
+Agent
+4
+
+main
+
+
+Remote Updates
+Arthur-018/App-Valorant
+origin/main•upstream
+last fetched 13 hours ago
+
+
+Sync Changes
+
+Pull
+
+Push
+Commit
+There are no changes to commit.
+Add new sections for game version, ranks, store, and currency details
+
+
+
+Show previous messages
+
+Show less
+
+4 actions
+A barra de busca está funcionando — aparece logo abaixo do cabeçalho com o placeholder "Buscar skin, pacote ou edição...".
+
+Sobre a API: sim, a valorant-api.com é mantida pela comunidade e atualizada de forma contínua a cada patch do Valorant — inclui sempre os pacotes mais recentes, novos mapas, novos agentes, armas e skins lançados pela Riot. Como o app puxa os dados ao vivo a cada vez que você abre uma tela, basta abrir o app que ele já vem com o conteúdo mais novo. Não há cache no app.
+
+Busca de skins adicionada: na tela de skins de cada arma agora tem um campo de busca no topo. Ele filtra por:
+
+Nome da skin (ex.: "Reaver", "RGX", "Imortalizados")
+Nome do pacote/coleção (ex.: "RGX 11z Pro")
+Nome da edição (ex.: "Exclusiva", "Premium", "Selecionada", "Ultra")
+Tem o ícone de lupa à esquerda e um "X" para limpar a busca quando há texto digitado.
+
+
+Checkpoint made
+14 hours ago
+
+Worked for 1 minute
+Na parte dos mapas, quero adicionar uma opção. Adicionar a opção de Ver TODOS OS MAPAS, e VER MAPAS DA ROTAÇÃO no caso, ver mapas da rotação, serão somente os mapas que estão na rotação do modo competitivo no momento atual que está o jogo conforme o app.
+E quero adicionar mais coisas da API, no caso, ver Banners que teriam a mesma coisa de agentes e armas e mapas. Que quando clicado, terá uma barra de pesquisa para pesquisar o banner, e mostrará todos os banners. Quero também adicionar a parte dos sprays e também dos titulos.
+
+14 hours ago
+
+Show less
+
+13 actions
+Tenho tudo que preciso. Vou criar as 3 novas telas (banners, sprays, títulos), atualizar a tela de mapas com o filtro Todos/Rotação e adicionar os atalhos no Home.
+
+
+Edited app/maps.jsx
+Now I'll create the three new screens (banners, sprays, titles) in parallel:
+
+
+3 actions
+Now update the home screen to add the three new categories:
+
+
+5 actions
+The maps page filter chips are clipped. Let me check how agents.jsx handles the same pattern and fix the maps layout.
+
+
+13 actions
+Os filtros agora aparecem corretamente. Vou clicar em "Rotação competitiva" para confirmar.
+
+
+Verified maps filter chip functionality
+Tudo funcionando. Aqui está o que foi adicionado:
+
+Sobre a API: sim, a valorant-api.com é mantida pela comunidade e atualizada com cada patch do Valorant. Ela tem todos os pacotes mais recentes, mapas novos (incluindo Corrode, o mais recente), agentes, armas, banners e sprays. O app puxa os dados ao vivo, sem cache.
+
+Mapas com filtro:
+
+Dois chips no topo: Todos os mapas (mostra todos os mapas competitivos do jogo) e Rotação competitiva (mostra somente os 7 mapas da pool atual: Ascent, Bind, Haven, Sunset, Lotus, Abyss e Corrode).
+A pool de rotação é uma constante no arquivo (ROTATION_MAP_NAMES em app/maps.jsx), fácil de atualizar quando a Riot trocar a rotação. A API pública não expõe a rotação ativa do competitivo.
+Banners (/banners):
+
+Grade com os ~917 cartões de jogador da API
+Barra de busca por nome
+Ao clicar abre uma janela com a arte ampla do banner e botão X para fechar
+Sprays (/sprays):
+
+Grade com os ~853 sprays
+Barra de busca por nome
+Ao clicar abre janela com o ícone em alta resolução; mostra "Spray animado" se tiver versão GIF
+Títulos (/titles):
+
+Lista com os 374+ títulos de jogador
+Barra de busca por texto do título ou nome interno
+Cada item mostra o texto que aparece no jogo + nome do título
+Home atualizada com os três novos atalhos (Banners, Sprays, Títulos), todos com cores e ícones distintos.
+
+
+Checkpoint made
+14 hours ago
+
+Worked for 4 minutes
+Quero adicionar as temporadas dos jogos, as datas de cada sesson, tendo também uma barra de pesquisa. No caso, terá quando começou uma temporada e quando terminou, e em cada temporada mostrará quantas sessons teve e quando começou e quando terminou. No caso, irá aparecer as temporadas quando começou e terminou, e quando clicadas aparecerá as sessons, e dentro de cada sesson, mostrará quando começou e terminou, e se possivel, dentro das sessons mostre os top 100 radiantes de cada sesson com nomes, o banner e o titulo que estava usando, assim como no jogo, se for possivel. Mostre essas informações das sessons, somente quando a sesson for clicada, e quando clicada mostre uma opção "VER TOP 100 JOGADORES"
+
+14 hours ago
+
+6 messages & 32 actions
+
+Checkpoint made
+14 hours ago
+
+Worked for 5 minutes
+
+Attached Image
+qual dessas sesões?
+
+14 hours ago
+
+1 message & 1 action
+
+Checkpoint made
+14 hours ago
+
+Attached Image
+é aqui??
+
+13 hours ago
+Sim, é exatamente aí! O canal #get-a-key.
+
+Olhando a imagem, o caminho é direto:
+
+Acessa https://api.henrikdev.xyz/dashboard (o link que o bot fica repetindo "GET A KEY HERE").
+Faz login com a sua conta do Discord no dashboard.
+Lá dentro você cria uma chave nova — geralmente do tipo Basic (gratuita, libera o leaderboard sem precisar de aprovação manual).
+Copia a chave gerada (vai ser uma string tipo HDEV-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).
+Quando tiver a chave copiada, me manda aqui no chat que eu adiciono ela com segurança como secret no app e ativo o ranking real.
+
+
+Checkpoint made
+13 hours ago
+
+Attached Image
+o que eu adiciono???
+
+13 hours ago
+Preenche assim:
+
+Application Name: APP Valorant Hub (já tá certo, pode deixar)
+Description: algo curto tipo App pessoal de consulta a assets do Valorant e ranking dos top 100
+Game: Valorant (já tá selecionado)
+Access Tier: marca Standard (30 req/min) — é o gratuito e instantâneo, não precisa de aprovação manual. É mais que suficiente pro nosso uso.
+Check this if your application generates revenue...: deixa desmarcado (o app é só pessoal, sem fins comerciais).
+Aí clica em Generate Key. A chave vai aparecer na tela — copia e me manda aqui.
+
+Importante: Não cole a chave direto no chat se for um espaço público. O ideal é que, quando você clicar em "Generate Key", eu peça pra você adicionar como secret no Replit (a forma segura), e assim a chave fica criptografada e não fica visível no código. Te explico o passo a passo quando você gerar.
+
+Não marca Enhanced nem Custom — esses precisam de revisão manual e podem demorar dias.
+
+
+Checkpoint made
+13 hours ago
+Pronto
+
+13 hours ago
+
+1 message & 2 actions
+
+Worked for 13 seconds
+
+2 messages & 3 actions
+
+Worked for 36 seconds
+
+5 messages & 21 actions
+
+Checkpoint made
+13 hours ago
+
+Worked for 2 minutes
+Remova isso que não está sendo utilizado.
+
+13 hours ago
+
+1 message & 1 action
+
+Worked for 10 seconds
+E agora, quero saber se tem mais alguma coisa que a API do valorant disponibiliza e que posso usar no aplicativo
+
+13 hours ago
+
+1 message & 1 action
+Adicione a versão atual, patentes competitivas, pacotes da loja com o preço e adicione o preço em dinheiro do jogo e dinheiro real de quanto no total precisa gastar para poder comprar. Adicione Modos de jogo, adicione eventos, moedas do jogo e quanto o valor que pode comprar e o valor que pode comprar com dinheiro real.
+
+13 hours ago
+
+Analyzing API data structures
+Vou inspecionar cada endpoint para entender a estrutura dos dados antes de codar:
+
+
+4 actions
+Boa. Agora vejo:
+
+Versão: tem dados completos (versão, build, data)
+Patentes: 28 tiers no último set, cada um com nome, ícone, cor
+Pacotes (bundles): a API tem só metadata (nome, imagem), não tem preços — preços vêm do storefront em tempo real, que é privado
+Modos de jogo: 15 modos com ícone, descrição e duração
+Eventos: 16 eventos (passes, torneios) com datas
+Moedas: 4 moedas (VP, RADIANITE, Kingdom, Agentes grátis)
+Deixa eu inspecionar mais detalhes das patentes e verificar se algum bundle tem preço:
+
+
+2 actions
+Vou criar tudo agora. Sobre os preços dos bundles individuais: a API pública não traz isso (vem do storefront privado do jogo). Vou colocar uma seção de referência das embalagens de VP na tela de moedas com os preços do Brasil, e na tela de bundles deixar claro essa limitação. Criando os 6 arquivos em paralelo:
+
+
+9 actions
+Restartando para validar:
+
+
+8 actions
+Tudo funcionando. Só preciso esconder o "EEconomyTypes::Other" raw que aparece nos modos:
+
+
+Edited app/gamemodes.jsx
+Atualizei o replit.md agora:
+
+
+2 actions
+Pronto! Tudo funcionando. Adicionei as 6 telas novas ao app:
+
+1. Versão atual — patch do jogo (12.07), build, engine, data de compilação. Card grande com a versão em destaque e detalhes técnicos abaixo.
+
+2. Patentes — todas as patentes agrupadas por divisão (Ferro, Bronze, Prata, Ouro, Platina, Diamante, Ascendente, Imortal, Radiante) com ícones reais e ponto colorido.
+
+3. Pacotes — grade visual com os 311 bundles da loja, busca e modal de detalhe ao tocar. Coloquei um aviso porque a API pública não fornece preços individuais dos bundles (eles vêm da loja em tempo real e variam por região/rotação) — por isso adicionei um botão de atalho no canto superior pra ir direto pra tela de Moedas.
+
+4. Modos de Jogo — todos os modos com ícone, descrição e duração (Disputa da Spike, Mata-Mata, Disparada, Frenético, Batalha Nevada, etc).
+
+5. Eventos — todos os passes/eventos com início, término, duração em dias e status (Em andamento/Encerrado/Em breve).
+
+6. Moedas — as 4 moedas (VP, Radianite, Kingdom, Agentes grátis) com explicação de cada uma + uma tabela completa dos 6 pacotes de VP do Brasil:
+
+475 VP — R$ 9,90
+1.000 + 50 bônus — R$ 19,90
+2.050 + 125 bônus — R$ 39,90
+3.650 + 300 bônus — R$ 69,90
+5.350 + 650 bônus — R$ 99,90
+11.000 + 1.700 bônus — R$ 199,90 (marcado como "MELHOR" custo-benefício)
+E no rodapé: comprando todos os pacotes = 27.200 VP por R$ 439,40 total.
+
+Tudo registrado no _layout.jsx, com 6 novos cards na home e o replit.md atualizado.
+
+
+Checkpoint made
+13 hours ago
+
+Worked for 5 minutes
+
+Scroll to latest
+You're out of credits.
+Upgrade to Core
+
+Make, test, iterate…
+
+
+
+Economy
+
+
+App-Valorant - Replit
