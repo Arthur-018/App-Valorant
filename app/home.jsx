@@ -9,7 +9,10 @@ const CATEGORIES = [
   { id: "agents",  title: "Agentes", subtitle: "Conheça os lutadores", icon: "shield",     color: "#FF4655", path: "/agents" },
   { id: "weapons", title: "Armas",   subtitle: "Arsenal completo",     icon: "crosshair",  color: "#00C4B4", path: "/weapons" },
   { id: "maps",    title: "Mapas",   subtitle: "Cenários do jogo",     icon: "map",        color: "#7B5BD2", path: "/maps" },
-  { id: "profile", title: "Perfil",  subtitle: "Sua conta",            icon: "user",       color: "#F5A623", path: "/profile" },
+  { id: "banners", title: "Banners", subtitle: "Cartões de jogador",   icon: "image",      color: "#56B847", path: "/banners" },
+  { id: "sprays",  title: "Sprays",  subtitle: "Adesivos no cenário",  icon: "droplet",    color: "#E91E63", path: "/sprays" },
+  { id: "titles",  title: "Títulos", subtitle: "Frases de exibição",   icon: "award",      color: "#F5A623", path: "/titles" },
+  { id: "profile", title: "Perfil",  subtitle: "Sua conta",            icon: "user",       color: "#3498DB", path: "/profile" },
 ];
 
 export default function HomeScreen() {

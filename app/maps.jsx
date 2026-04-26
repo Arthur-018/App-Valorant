@@ -1,11 +1,12 @@
 import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   Image,
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -15,6 +16,21 @@ import { ErrorView } from "../components/ErrorView";
 import { LoadingScreen } from "../components/LoadingScreen";
 import { useColors } from "../hooks/useColors";
 
+const ROTATION_MAP_NAMES = [
+  "Ascent",
+  "Bind",
+  "Haven",
+  "Sunset",
+  "Lotus",
+  "Abyss",
+  "Corrode",
+];
+
+const FILTERS = [
+  { id: "all", label: "Todos os mapas" },
+  { id: "rotation", label: "Rotação competitiva" },
+];
+
 export default function MapsScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
@@ -22,6 +38,7 @@ export default function MapsScreen() {
   const [maps, setMaps] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [filter, setFilter] = useState("all");
 
   const load = async () => {
     setLoading(true);
@@ -43,6 +60,14 @@ export default function MapsScreen() {
 
   const topPad = Platform.OS === "web" ? Math.max(insets.top, 24) : insets.top;
 
+  const visibleMaps = useMemo(() => {
+    if (!maps) return [];
+    if (filter === "rotation") {
+      return maps.filter((m) => ROTATION_MAP_NAMES.includes(m.displayName));
+    }
+    return maps.filter((m) => m.coordinates);
+  }, [maps, filter]);
+
   if (loading) return <LoadingScreen message="Carregando mapas..." />;
   if (error || !maps) return <ErrorView message="Não foi possível carregar os mapas" onRetry={load} />;
 
@@ -56,8 +81,41 @@ export default function MapsScreen() {
         <View style={{ width: 38 }} />
       </View>
 
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.filterScroll}
+        contentContainerStyle={styles.filterRow}
+      >
+        {FILTERS.map((f) => {
+          const active = filter === f.id;
+          return (
+            <Pressable
+              key={f.id}
+              onPress={() => setFilter(f.id)}
+              style={[
+                styles.filterChip,
+                {
+                  backgroundColor: active ? colors.primary : colors.card,
+                  borderColor: active ? colors.primary : colors.border,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.filterChipText,
+                  { color: active ? "#fff" : colors.foreground },
+                ]}
+              >
+                {f.label}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </ScrollView>
+
       <FlatList
-        data={maps}
+        data={visibleMaps}
         keyExtractor={(item) => item.uuid}
         contentContainerStyle={{
           paddingHorizontal: 16,
@@ -87,6 +145,14 @@ export default function MapsScreen() {
             </View>
           </View>
         )}
+        ListEmptyComponent={
+          <View style={styles.empty}>
+            <Feather name="map" size={32} color={colors.textSecondary} />
+            <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+              Nenhum mapa nesta categoria
+            </Text>
+          </View>
+        }
       />
     </View>
   );
@@ -103,6 +169,19 @@ const styles = StyleSheet.create({
   },
   backBtn: { width: 38, height: 38, borderRadius: 10, alignItems: "center", justifyContent: "center" },
   headerTitle: { fontSize: 18, fontFamily: "Inter_700Bold" },
+  filterScroll: { flexGrow: 0, height: 48 },
+  filterRow: {
+    paddingHorizontal: 16,
+    gap: 8,
+    alignItems: "center",
+  },
+  filterChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 999,
+    borderWidth: 1,
+  },
+  filterChipText: { fontSize: 13, fontFamily: "Inter_600SemiBold" },
   mapCard: {
     height: 180,
     borderRadius: 16,
@@ -117,4 +196,6 @@ const styles = StyleSheet.create({
   coordText: { color: "rgba(255,255,255,0.7)", fontSize: 12, fontFamily: "Inter_400Regular" },
   descBadge: { alignSelf: "flex-start", paddingHorizontal: 8, paddingVertical: 3, borderRadius: 6 },
   descBadgeText: { color: "#FF4655", fontSize: 11, fontFamily: "Inter_500Medium" },
+  empty: { alignItems: "center", paddingTop: 60, gap: 12 },
+  emptyText: { fontSize: 15, fontFamily: "Inter_400Regular" },
 });
