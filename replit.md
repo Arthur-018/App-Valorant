@@ -28,7 +28,13 @@ App mobile real (Expo + React Native + Expo Router) inspirado no protótipo "Val
   - `seasons.jsx` — lista de temporadas (episódios) com datas + busca
   - `season-detail.jsx` — detalhe do episódio com sumário e lista de atos
   - `act-detail.jsx` — detalhe do ato com início/término/duração + botão "VER TOP 100 JOGADORES"
-  - `leaderboard.jsx` — top 100 do ato selecionado (HenrikDev API, requer secret HDEV_API_KEY); seletor de região; busca; mostra nome, banner (cartão) e título do jogador. Sem chave, exibe mensagem explicativa.
+  - `leaderboard.jsx` — top 100 do ato selecionado (HenrikDev API, requer secret EXPO_PUBLIC_HDEV_API_KEY); seletor de região; busca; mostra nome, banner (cartão) e título do jogador.
+  - `version.jsx` — versão atual do patch do Valorant (manifest, branch, build, engine, riot client, data de compilação)
+  - `competitive-tiers.jsx` — patentes competitivas agrupadas por divisão (Ferro → Radiante) com ícones e cores
+  - `bundles.jsx` — grade de pacotes da loja (311 bundles), busca, modal de detalhe; aviso de que preços individuais não estão na API pública
+  - `gamemodes.jsx` — lista de modos de jogo (Competitivo, Mata-Mata, Spike Rush, etc) com ícones, descrições e duração
+  - `events.jsx` — eventos/passes com início, término, duração e status (em andamento/encerrado/em breve)
+  - `currencies.jsx` — 4 moedas (VP, Radianite, Kingdom, Agentes grátis) + tabela de pacotes de VP do Brasil com VP, bônus, preço em R$ e total
   - `profile.jsx` — perfil fictício + aviso sobre RSO
   - `_layout.jsx` — Stack root, carrega fontes Inter, esconde splash
 - `components/`

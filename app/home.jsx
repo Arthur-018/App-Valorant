@@ -13,6 +13,12 @@ const CATEGORIES = [
   { id: "sprays",  title: "Sprays",  subtitle: "Adesivos no cenário",  icon: "droplet",    color: "#E91E63", path: "/sprays" },
   { id: "titles",  title: "Títulos", subtitle: "Frases de exibição",   icon: "award",      color: "#F5A623", path: "/titles" },
   { id: "seasons", title: "Temporadas", subtitle: "Episódios e atos",  icon: "calendar",   color: "#9B59B6", path: "/seasons" },
+  { id: "tiers",   title: "Patentes", subtitle: "Sistema competitivo",  icon: "shield",     color: "#FFB400", path: "/competitive-tiers" },
+  { id: "bundles", title: "Pacotes",  subtitle: "Coleções da loja",     icon: "package",    color: "#E74C3C", path: "/bundles" },
+  { id: "modes",   title: "Modos",    subtitle: "Modos de jogo",        icon: "play-circle", color: "#1ABC9C", path: "/gamemodes" },
+  { id: "events",  title: "Eventos",  subtitle: "Passes e torneios",    icon: "star",       color: "#F39C12", path: "/events" },
+  { id: "money",   title: "Moedas",   subtitle: "VP, Radianite e mais", icon: "dollar-sign", color: "#27AE60", path: "/currencies" },
+  { id: "version", title: "Versão",   subtitle: "Patch atual do jogo",  icon: "git-commit", color: "#95A5A6", path: "/version" },
   { id: "profile", title: "Perfil",  subtitle: "Sua conta",            icon: "user",       color: "#3498DB", path: "/profile" },
 ];
 

@@ -52,6 +52,12 @@ export default function RootLayout() {
         <Stack.Screen name="season-detail" />
         <Stack.Screen name="act-detail" />
         <Stack.Screen name="leaderboard" />
+        <Stack.Screen name="version" />
+        <Stack.Screen name="competitive-tiers" />
+        <Stack.Screen name="bundles" />
+        <Stack.Screen name="gamemodes" />
+        <Stack.Screen name="events" />
+        <Stack.Screen name="currencies" />
         <Stack.Screen name="profile" />
       </Stack>
     </SafeAreaProvider>
