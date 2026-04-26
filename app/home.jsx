@@ -7,7 +7,7 @@ import { useColors } from "../hooks/useColors";
 
 const CATEGORIES = [
   { id: "agents",  title: "Agentes", subtitle: "Conheça os lutadores", icon: "shield",     color: "#FF4655", path: "/agents" },
-  { id: "weapons", title: "Armas",   subtitle: "Arsenal completo",     icon: "crosshair",  color: "#00C4B4", path: "/weapons" },
+  { id: "weapons", title: "Armas",   subtitle: "Arsenal completo e Skins",     icon: "crosshair",  color: "#00C4B4", path: "/weapons" },
   { id: "maps",    title: "Mapas",   subtitle: "Cenários do jogo",     icon: "map",        color: "#7B5BD2", path: "/maps" },
   { id: "banners", title: "Banners", subtitle: "Cartões de jogador",   icon: "image",      color: "#56B847", path: "/banners" },
   { id: "sprays",  title: "Sprays",  subtitle: "Adesivos no cenário",  icon: "droplet",    color: "#E91E63", path: "/sprays" },
