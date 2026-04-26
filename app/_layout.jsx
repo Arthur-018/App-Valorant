@@ -45,6 +45,13 @@ export default function RootLayout() {
         <Stack.Screen name="weapon-detail" />
         <Stack.Screen name="weapon-skins" />
         <Stack.Screen name="maps" />
+        <Stack.Screen name="banners" />
+        <Stack.Screen name="sprays" />
+        <Stack.Screen name="titles" />
+        <Stack.Screen name="seasons" />
+        <Stack.Screen name="season-detail" />
+        <Stack.Screen name="act-detail" />
+        <Stack.Screen name="leaderboard" />
         <Stack.Screen name="profile" />
       </Stack>
     </SafeAreaProvider>

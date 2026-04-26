@@ -21,7 +21,14 @@ App mobile real (Expo + React Native + Expo Router) inspirado no protótipo "Val
   - `weapons.jsx` — lista de armas com busca
   - `weapon-detail.jsx` — detalhe da arma: imagem, estatísticas (taxa de disparo, pente, recarga), dano por distância e botão "Ver Skins"
   - `weapon-skins.jsx` — grade de skins daquela arma (com cromas)
-  - `maps.jsx` — lista de mapas com splash arts
+  - `maps.jsx` — lista de mapas com filtro Todos/Rotação competitiva
+  - `banners.jsx` — grade de cartões de jogador com busca e modal
+  - `sprays.jsx` — grade de sprays com busca e modal (mostra GIF se animado)
+  - `titles.jsx` — lista de títulos de jogador com busca
+  - `seasons.jsx` — lista de temporadas (episódios) com datas + busca
+  - `season-detail.jsx` — detalhe do episódio com sumário e lista de atos
+  - `act-detail.jsx` — detalhe do ato com início/término/duração + botão "VER TOP 100 JOGADORES"
+  - `leaderboard.jsx` — top 100 do ato selecionado (HenrikDev API, requer secret HDEV_API_KEY); seletor de região; busca; mostra nome, banner (cartão) e título do jogador. Sem chave, exibe mensagem explicativa.
   - `profile.jsx` — perfil fictício + aviso sobre RSO
   - `_layout.jsx` — Stack root, carrega fontes Inter, esconde splash
 - `components/`
