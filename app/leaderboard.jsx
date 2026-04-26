@@ -49,10 +49,11 @@ export default function LeaderboardScreen() {
     setLoading(true);
     setErrorState(null);
     try {
-      const url = `https://api.henrikdev.xyz/valorant/v3/leaderboard/${region}?size=100&season_id=${actUuid}`;
-      const res = await fetch(url, {
-        headers: { Accept: "application/json" },
-      });
+      const apiKey = process.env.EXPO_PUBLIC_HDEV_API_KEY;
+      const url = `https://api.henrikdev.xyz/valorant/v2/leaderboard/${region}?size=100&season_id=${actUuid}`;
+      const headers = { Accept: "application/json" };
+      if (apiKey) headers.Authorization = apiKey;
+      const res = await fetch(url, { headers });
       if (res.status === 401 || res.status === 403) {
         setErrorState("key");
         setPlayers([]);
@@ -69,7 +70,7 @@ export default function LeaderboardScreen() {
         return;
       }
       const json = await res.json();
-      const list = json?.data?.players || json?.players || [];
+      const list = json?.players || json?.data?.players || json?.data || [];
       setPlayers(list.slice(0, 100));
 
       const [titlesRes, cardsRes] = await Promise.all([
